@@ -50,7 +50,7 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string InitializeMissionGetTravelerName()
+        public static string InitializeMissionGetCitizenName()
         {
             string messageBoxText =
                 "What was your name again?";
@@ -58,7 +58,7 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string InitializeMissionGetTravelerAge(Citizen gameTraveler)
+        public static string InitializeMissionGetCitizenAge(Citizen gameCitizen)
         {
             string messageBoxText =
                 "Thats right. And how old are you?";
@@ -66,7 +66,7 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string InitializeMissionGetTravelerPlanet(Citizen gameTraveler)
+        public static string InitializeMissionGetCitizenPlanet(Citizen gameCitizen)
         {
             string messageBoxText =
                 "Where are you from again?";
@@ -75,7 +75,7 @@ namespace TB_QuestGame
         }
 
         /* Unused
-        public static string InitializeMissionGetTravelerRace(Citizen gameTraveler)
+        public static string InitializeMissionGetCitizenRace(Citizen gameCitizen)
         {
             string messageBoxText =
                 "TODO Text.cs 64";
@@ -95,13 +95,13 @@ namespace TB_QuestGame
             return messageBoxText;
         }*/
 
-        public static string InitializeMissionEchoTravelerInfo(Citizen gameTraveler)
+        public static string InitializeMissionEchoCitizenInfo(Citizen gameCitizen)
         {
             string messageBoxText =
                 "You remember now. \n" +
-                $"Your name is {gameTraveler.Name}. \n" +
-                $"You are {gameTraveler.Age} years old. \n" +
-                $"You are from {gameTraveler.HomePlanet}.";
+                $"Your name is {gameCitizen.Name}. \n" +
+                $"You are {gameCitizen.Age} years old. \n" +
+                $"You are from {gameCitizen.HomePlanet}.";
 
             return messageBoxText;
         }
@@ -112,24 +112,29 @@ namespace TB_QuestGame
 
         #region MAIN MENU ACTION SCREENS
 
-        public static string TravelerInfo(Citizen gameTraveler)
+        public static string CitizenInfo(Citizen gameCitizen)
         {
             string messageBoxText =
-                $"Name: { gameTraveler.Name} \n" +
-                $"Age: {gameTraveler.Age} \n" +
-                $"Home Planet: {gameTraveler.HomePlanet} \n" +
+                $"Name: { gameCitizen.Name} \n" +
+                $"Age: {gameCitizen.Age} \n" +
+                $"Home Planet: {gameCitizen.HomePlanet} \n" +
                 " \n" +
-                $"Traveler Greeting: {gameTraveler.Greeting()} \n" +
+                $"Citizen Greeting: {gameCitizen.Greeting()} \n" +
                 " \n";
 
 
             return messageBoxText;
         }
 
+        public static string InvalidAction()
+        {
+            return "I don't recognise that command.";
+        }
+
         //public static string Travel(int currentSpaceTimeLocationId, List<SpaceTimeLocation> spaceTimeLocations)
         //{
         //    string messageBoxText =
-        //        $"{gameTraveler.Name}, Aion Base will need to know the name of the new location.\n" +
+        //        $"{gameCitizen.Name}, Aion Base will need to know the name of the new location.\n" +
         //        " \n" +
         //        "Enter the ID number of your desired location from the table below.\n" +
         //        " \n";

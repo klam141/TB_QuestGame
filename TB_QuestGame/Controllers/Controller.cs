@@ -14,7 +14,7 @@ namespace TB_QuestGame
         #region FIELDS
 
         private ConsoleView _gameConsoleView;
-        private Citizen _gameTraveler;
+        private Citizen _gameCitizen;
         private bool _playingGame;
 
         #endregion
@@ -48,8 +48,8 @@ namespace TB_QuestGame
         /// </summary>
         private void InitializeGame()
         {
-            _gameTraveler = new Citizen();
-            _gameConsoleView = new ConsoleView(_gameTraveler);
+            _gameCitizen = new Citizen();
+            _gameConsoleView = new ConsoleView(_gameCitizen);
             _playingGame = true;
 
             Console.CursorVisible = false;
@@ -60,7 +60,7 @@ namespace TB_QuestGame
         /// </summary>
         private void ManageGameLoop()
         {
-            CitizenAction travelerActionChoice = CitizenAction.None;
+            CitizenAction CitizenActionChoice = CitizenAction.None;
 
             //
             // display splash screen
@@ -82,7 +82,7 @@ namespace TB_QuestGame
             _gameConsoleView.GetContinueKey();
 
             //
-            // initialize the mission traveler
+            // initialize the mission Citizen
             // 
             InitializeMission();
 
@@ -96,19 +96,19 @@ namespace TB_QuestGame
             //
             while (_playingGame)
             {
-                travelerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
+                CitizenActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
                 
 
                 //
                 // choose an action based on the user's menu choice
                 //
-                switch (travelerActionChoice)
+                switch (CitizenActionChoice)
                 {
                     case CitizenAction.None:
                         break;
 
-                    case CitizenAction.TravelerInfo:
-                        _gameConsoleView.DisplayTravelerInfo();
+                    case CitizenAction.CitizenInfo:
+                        _gameConsoleView.DisplayCitizenInfo();
                         
                         break;
 
@@ -133,12 +133,12 @@ namespace TB_QuestGame
         /// </summary>
         private void InitializeMission()
         {
-            Citizen traveler = _gameConsoleView.GetInitialTravelerInfo();
+            Citizen Citizen = _gameConsoleView.GetInitialCitizenInfo();
 
-            _gameTraveler.Name = traveler.Name;
-            _gameTraveler.Age = traveler.Age;
-            _gameTraveler.Race = traveler.Race;
-            _gameTraveler.HomePlanet = traveler.HomePlanet;
+            _gameCitizen.Name = Citizen.Name;
+            _gameCitizen.Age = Citizen.Age;
+            _gameCitizen.Race = Citizen.Race;
+            _gameCitizen.HomePlanet = Citizen.HomePlanet;
         }
 
         #endregion

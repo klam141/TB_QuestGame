@@ -37,9 +37,13 @@ namespace TB_QuestGame
             MenuTitle = "Main Menu",
             MenuChoices = new Dictionary<char, CitizenAction>()
                 {
-                    { '1', CitizenAction.TravelerInfo },
-                    { '2', CitizenAction.Exit }
-                }
+                    { '1', CitizenAction.CitizenInfo },
+                    { '2', CitizenAction.LookAround},
+                    { '3', CitizenAction.Travel},
+                    { '4', CitizenAction.CitizenLocationsVisited},
+                    { '5', CitizenAction.ListDestinations},
+                    { '0', CitizenAction.Exit }
+        }
         };
 
         public static Menu ExitMenu = new Menu()
@@ -52,14 +56,14 @@ namespace TB_QuestGame
             }
         };
 
-        //public static Menu ManageTraveler = new Menu()
+        //public static Menu ManageCitizen = new Menu()
         //{
-        //    MenuName = "ManageTraveler",
+        //    MenuName = "ManageCitizen",
         //    MenuTitle = "Manage Citizen",
         //    MenuChoices = new Dictionary<char, PlayerAction>()
         //            {
         //                PlayerAction.MissionSetup,
-        //                PlayerAction.TravelerInfo,
+        //                PlayerAction.CitizenInfo,
         //                PlayerAction.Exit
         //            }
         //};

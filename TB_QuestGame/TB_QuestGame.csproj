@@ -51,6 +51,9 @@
     <Compile Include="ConsoleUtilities\ConsoleWindowHelper.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\GameLocation.cs" />
+    <Compile Include="Models\GameMap.cs" />
+    <Compile Include="Models\GameObjects.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Citizen.cs" />
     <Compile Include="Models\CitizenAction.cs" />

@@ -16,7 +16,7 @@ namespace TB_QuestGame
         //
         // declare game objects for the ConsoleView object to use
         //
-        Citizen _gameTraveler;
+        Citizen _gameCitizen;
 
         #endregion
 
@@ -29,9 +29,9 @@ namespace TB_QuestGame
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Citizen gameTraveler)
+        public ConsoleView(Citizen gameCitizen)
         {
-            _gameTraveler = gameTraveler;
+            _gameCitizen = gameCitizen;
 
             InitializeDisplay();
         }
@@ -85,7 +85,15 @@ namespace TB_QuestGame
             ConsoleKeyInfo keyPressedInfo = Console.ReadKey();
             char keyPressed = keyPressedInfo.KeyChar;
 
-            choosenAction = menu.MenuChoices[keyPressed];
+            if(menu.MenuChoices.ContainsKey(keyPressed))
+            {
+                choosenAction = menu.MenuChoices[keyPressed];
+            }
+            else
+            {
+                DisplayGamePlayScreen("Your Quarters", Text.InvalidAction(), ActionMenu.MainMenu, "");
+            }
+
 
             return choosenAction;
         }
@@ -355,10 +363,10 @@ namespace TB_QuestGame
         /// <summary>
         /// get the player's initial information at the beginning of the game
         /// </summary>
-        /// <returns>traveler object with all properties updated</returns>
-        public Citizen GetInitialTravelerInfo()
+        /// <returns>Citizen object with all properties updated</returns>
+        public Citizen GetInitialCitizenInfo()
         {
-            Citizen traveler = new Citizen();
+            Citizen Citizen = new Citizen();
 
             //
             // intro
@@ -367,44 +375,44 @@ namespace TB_QuestGame
             GetContinueKey();
 
             //
-            // get traveler's name
+            // get Citizen's name
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetTravelerName(), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetCitizenName(), ActionMenu.MissionIntro, "");
             DisplayInputBoxPrompt("Enter your name: ");
-            traveler.Name = GetString();
+            Citizen.Name = GetString();
 
             //
-            // get traveler's age
+            // get Citizen's age
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetTravelerAge(traveler), ActionMenu.MissionIntro, "");
-            int gameTravelerAge;
+            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetCitizenAge(Citizen), ActionMenu.MissionIntro, "");
+            int gameCitizenAge;
 
-            GetInteger($"Enter your age, {traveler.Name}: ", 0, 1000000, out gameTravelerAge);
-            traveler.Age = gameTravelerAge;
+            GetInteger($"Enter your age, {Citizen.Name}: ", 0, 1000000, out gameCitizenAge);
+            Citizen.Age = gameCitizenAge;
 
             //
             // get home planet
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetTravelerPlanet(traveler), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetCitizenPlanet(Citizen), ActionMenu.MissionIntro, "");
 
-            DisplayInputBoxPrompt($"Enter your home planet, {traveler.Name}: ");
-            traveler.HomePlanet = GetString();
+            DisplayInputBoxPrompt($"Enter your home planet, {Citizen.Name}: ");
+            Citizen.HomePlanet = GetString();
 
             //
-            // echo the traveler's info
+            // echo the Citizen's info
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionEchoTravelerInfo(traveler), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionEchoCitizenInfo(Citizen), ActionMenu.MissionIntro, "");
             GetContinueKey();
 
-            return traveler;
+            return Citizen;
         }
 
         #region ----- display responses to menu action choices -----
 
-        public void DisplayTravelerInfo()
+        public void DisplayCitizenInfo()
         {
-            DisplayGamePlayScreen("Citizen Information", Text.TravelerInfo(_gameTraveler), ActionMenu.MainMenu, "");
-            Console.Write(_gameTraveler.HomePlanet);
+            DisplayGamePlayScreen("Citizen Information", Text.CitizenInfo(_gameCitizen), ActionMenu.MainMenu, "");
+            Console.Write(_gameCitizen.HomePlanet);
         }
 
 
