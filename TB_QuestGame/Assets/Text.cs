@@ -126,12 +126,31 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
+        public static string ListLocations(IEnumerable<Location> Locations)
+        {
+            string messageBoxText = 
+                "Locations\n" +
+                " \n" +
+                "ID".PadRight(10) + "Name".PadRight(30) + "\n";
+
+            string LocationList = null;
+            foreach (Location location in Locations)
+            {
+                LocationList +=
+                    $"{location.LocationID}".PadRight(10) +
+                    $"{location.CommonName}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            return messageBoxText += LocationList;
+        }
+
         public static string InvalidAction()
         {
             return "I don't recognise that command.";
         }
 
-        //public static string Travel(int currentSpaceTimeLocationId, List<SpaceTimeLocation> spaceTimeLocations)
+        //public static string Travel(int currentSpaceTimeLocationId, List<Location> spaceTimeLocations)
         //{
         //    string messageBoxText =
         //        $"{gameCitizen.Name}, Aion Base will need to know the name of the new location.\n" +
@@ -142,7 +161,7 @@ namespace TB_QuestGame
 
         //    string spaceTimeLocationList = null;
 
-        //    foreach (SpaceTimeLocation spaceTimeLocation in spaceTimeLocations)
+        //    foreach (Location spaceTimeLocation in spaceTimeLocations)
         //    {
         //        if (race != Character.RaceType.None)
         //        {

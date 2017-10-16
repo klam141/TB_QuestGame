@@ -17,6 +17,7 @@ namespace TB_QuestGame
         // declare game objects for the ConsoleView object to use
         //
         Citizen _gameCitizen;
+        Map _gameMap;
 
         #endregion
 
@@ -29,9 +30,10 @@ namespace TB_QuestGame
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Citizen gameCitizen)
+        public ConsoleView(Citizen gameCitizen, Map gameMap)
         {
             _gameCitizen = gameCitizen;
+            _gameMap = gameMap;
 
             InitializeDisplay();
         }
@@ -77,25 +79,20 @@ namespace TB_QuestGame
         /// <returns>action menu choice</returns>
         public CitizenAction GetActionMenuChoice(Menu menu)
         {
-            CitizenAction choosenAction = CitizenAction.None;
+            Console.CursorVisible = false;
 
-            //
-            // TODO validate menu choices
-            //
-            ConsoleKeyInfo keyPressedInfo = Console.ReadKey();
-            char keyPressed = keyPressedInfo.KeyChar;
+            char[] validKeys = menu.MenuChoices.Keys.ToArray();
+            char keyPressed;
 
-            if(menu.MenuChoices.ContainsKey(keyPressed))
+            do
             {
-                choosenAction = menu.MenuChoices[keyPressed];
-            }
-            else
-            {
-                DisplayGamePlayScreen("Your Quarters", Text.InvalidAction(), ActionMenu.MainMenu, "");
-            }
+                ConsoleKeyInfo kpi = Console.ReadKey(true);  //kpi is short for key pressed info
+                keyPressed = kpi.KeyChar;
+            } while (!validKeys.Contains(keyPressed));
 
-
-            return choosenAction;
+            Console.CursorVisible = true;
+            
+            return menu.MenuChoices[keyPressed];
         }
 
         /// <summary>
@@ -413,6 +410,11 @@ namespace TB_QuestGame
         {
             DisplayGamePlayScreen("Citizen Information", Text.CitizenInfo(_gameCitizen), ActionMenu.MainMenu, "");
             Console.Write(_gameCitizen.HomePlanet);
+        }
+
+        public void DisplayListOfLocations()
+        {
+            DisplayGamePlayScreen("Locations", Text.ListLocations(_gameMap.Locations), ActionMenu.MainMenu, "");
         }
 
 

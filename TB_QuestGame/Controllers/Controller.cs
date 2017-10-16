@@ -15,6 +15,7 @@ namespace TB_QuestGame
 
         private ConsoleView _gameConsoleView;
         private Citizen _gameCitizen;
+        private Map _gameMap;
         private bool _playingGame;
 
         #endregion
@@ -49,7 +50,8 @@ namespace TB_QuestGame
         private void InitializeGame()
         {
             _gameCitizen = new Citizen();
-            _gameConsoleView = new ConsoleView(_gameCitizen);
+            _gameMap = new Map();
+            _gameConsoleView = new ConsoleView(_gameCitizen, _gameMap);
             _playingGame = true;
 
             Console.CursorVisible = false;
@@ -110,6 +112,10 @@ namespace TB_QuestGame
                     case CitizenAction.CitizenInfo:
                         _gameConsoleView.DisplayCitizenInfo();
                         
+                        break;
+
+                    case CitizenAction.ListDestinations:
+                        _gameConsoleView.DisplayListOfLocations();
                         break;
 
                     case CitizenAction.Exit:
