@@ -11,6 +11,16 @@ namespace TB_QuestGame
     /// </summary>
     public static class ActionMenu
     {
+        public static Menu None = new Menu()
+        {
+            MenuName = "",
+            MenuTitle = "",
+            MenuChoices = new Dictionary<char, CitizenAction>()
+                    {
+                        { ' ', CitizenAction.None }
+                    }
+        };
+
         public static Menu MissionIntro = new Menu()
         {
             MenuName = "MissionIntro",

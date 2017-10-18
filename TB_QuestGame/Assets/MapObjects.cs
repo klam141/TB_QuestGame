@@ -20,7 +20,7 @@ namespace TB_QuestGame
                 Description = "The Norlon Corporation research facility located in " +
                     "the city of Heraklion on the north coast of Crete and the top secret " +
                     "research lab for the Aion Project.\n",
-                GeneralContents = "The lab is a large, well lit room, and staffed " +
+                GeneralContents =  "The lab is a large, well lit room, and staffed " +
                     "by a small number of scientists, all wearing light blue uniforms with the " +
                     "hydra-like Norlan Corporation logo. \n",
                 Accessable = true,
@@ -50,7 +50,7 @@ namespace TB_QuestGame
                 Description = "The Xantoria market, once controlled by the Thorian elite, is now an " +
                               "open market managed by the Xantorian Commerce Coop. It is a place " +
                               "where many races from various systems trade goods.",
-                GeneralContents = "- stuff in the room -",
+                GeneralContents ="- stuff in the room -" ,
                 Accessable = false,
                 ExperiencePoints = 20
             },
@@ -64,9 +64,12 @@ namespace TB_QuestGame
                 Description = "The Norlon Corporation Headquarters is located in just outside of Detroit Michigan." +
                               "Norlon, founded in 1985 as a bio-tech company, is now a 36 billion dollar company " +
                               "with huge holdings in defense and space research and development.",
-                GeneralContents = "- stuff in the room -",
+                GeneralContents = "Having Learned your lesson the first time you avoid the tack. The Room is pretty uninteresting otherwise",
                 Accessable = true,
-                ExperiencePoints = -10
+                ExperiencePoints = -10,
+                Events = new List<Events>() { Events.Death },
+                EventTypes = new List<EventTypes>() { EventTypes.FirstTimeOnly },
+                EventDescription = "You step on a tack and die."
             },
 
             new Location

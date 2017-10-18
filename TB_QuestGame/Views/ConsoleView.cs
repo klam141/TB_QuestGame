@@ -481,6 +481,14 @@ namespace TB_QuestGame
 
 
             return Citizen;
+        }        
+
+        public void DisplayEventText()
+        {
+            Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
+            DisplayGamePlayScreen("", Text.EventText(currentLocation), ActionMenu.None, "");
+
+            GetContinueKey();
         }
 
         #region ----- display responses to menu action choices -----
@@ -536,7 +544,7 @@ namespace TB_QuestGame
             return locationId;
         }
 
-        public void displayLocationsVisited()
+        public void DisplayLocationsVisited()
         {
             List<Location> visitedLocations = new List<Location>();
             foreach(int locationId in _gameCitizen.LocationsVisited)

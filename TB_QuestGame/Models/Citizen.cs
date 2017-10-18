@@ -12,12 +12,19 @@ namespace TB_QuestGame
     public class Citizen : Character
     {
         #region ENUMERABLES
-
+        
+        public enum Statuses
+        {
+            Healthy,
+            Stunned,
+            Dead
+        }
 
         #endregion
 
         #region FIELDS
-        string _status, _homePlanet;
+        Statuses _status;
+        string _homePlanet;
         int _health, _lives, _exp;
         bool _isStunned;
         private List<int> _locationsVisited;
@@ -25,7 +32,7 @@ namespace TB_QuestGame
         #endregion
 
         #region PROPERTIES
-        public string Status
+        public Statuses Status
         {
             get { return _status; }
             set { _status = value; }
@@ -79,7 +86,7 @@ namespace TB_QuestGame
 
         public Citizen(string name, RaceType race, int locationID) : base(name, race, locationID)
         {
-            _status = "Healthy";
+            _status = Statuses.Healthy;
             _health = 100;
             _isStunned = false;
             _locationsVisited = new List<int>();

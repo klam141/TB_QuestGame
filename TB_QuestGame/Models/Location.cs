@@ -18,6 +18,9 @@ namespace TB_QuestGame
         private string _generalContents;
         private bool _accessable;
         private int _experiencePoints;
+        private List<Events> _events;
+        private List<EventTypes> _eventTypes;
+        private string _eventDescription;
 
         #endregion
 
@@ -72,6 +75,23 @@ namespace TB_QuestGame
             set { _experiencePoints = value; }
         }
 
+        public List<Events> Events
+        {
+            get { return _events; }
+            set { _events = value; }
+        }
+
+        public List<EventTypes> EventTypes
+        {
+            get { return _eventTypes; }
+            set { _eventTypes = value; }
+        }
+
+        public string EventDescription
+        {
+            get { return _eventDescription; }
+            set { _eventDescription = value; }
+        }
         #endregion
 
 

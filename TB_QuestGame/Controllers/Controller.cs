@@ -122,6 +122,7 @@ namespace TB_QuestGame
 
                     case CitizenAction.LookAround:
                         _gameConsoleView.DisplayLookAround();
+                        TriggerEvents();
                         break;
 
                     case CitizenAction.ListDestinations:
@@ -129,15 +130,11 @@ namespace TB_QuestGame
                         break;
 
                     case CitizenAction.Travel:
-                        _gameCitizen.LocationID = _gameConsoleView.DisplayGetNextLocation();
-                        _currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
-
-                        //show new location's info
-                        _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+                        UpdateLocation(_gameConsoleView.DisplayGetNextLocation());
                         break;
 
                     case CitizenAction.CitizenLocationsVisited:
-                        _gameConsoleView.displayLocationsVisited();
+                        _gameConsoleView.DisplayLocationsVisited();
                         break;
 
                     case CitizenAction.Exit:
@@ -185,6 +182,9 @@ namespace TB_QuestGame
 
                 //add exp for visiting a new location
                 _gameCitizen.Exp += _currentLocation.ExperiencePoints;
+
+                //add/subtract hp for triggering an event
+
             }
 
             //death
@@ -194,11 +194,70 @@ namespace TB_QuestGame
                 {
                     _gameCitizen.Lives -= 1;
                     _gameCitizen.Health = 100;
+
+                    //respawns you at your quarters
+                    UpdateLocation(5);
                 }
                 else
                 {
                     //TODO game over
                 }
+            }
+        }
+
+        private void UpdateLocation(int newLocation)
+        {
+            _gameCitizen.LocationID = newLocation;
+            _currentLocation = _gameMap.GetLocationById(newLocation);
+
+            //show new location's info
+            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+        }
+
+        private void TriggerEvents()
+        {
+            //only do first time events on the first time
+            if (_currentLocation.EventTypes.Contains(EventTypes.FirstTimeOnly))
+            {
+                DoEvent();
+                _currentLocation.Events.Clear();
+            }
+            else DoEvent();
+        }
+
+        private void DoEvent()
+        {
+            foreach (Events e in _currentLocation.Events)
+            {
+                switch (e)
+                {
+                    case Events.Death:
+                        _gameCitizen.Health += -9999;
+                        break;
+
+                    //TODO other events
+                    case Events.MinorDamage:
+
+                        break;
+
+                    case Events.ModerateDamage:
+
+                        break;
+
+                    case Events.SevereDamage:
+
+                        break;
+
+                    case Events.AddNewItem:
+
+                        break;
+
+                    default:
+
+                        break;
+                }
+
+                _gameConsoleView.DisplayEventText();
             }
         }
         #endregion

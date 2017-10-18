@@ -246,6 +246,13 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
+        public static string EventText(Location location)
+        {
+            string messageBoxText = location.EventDescription;
+
+            return messageBoxText;
+        }
+
         #endregion
     }
 }
