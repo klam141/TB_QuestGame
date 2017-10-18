@@ -515,7 +515,7 @@ namespace TB_QuestGame
             int locationId = 0;
             bool validLocation = false;
 
-            DisplayGamePlayScreen("Travel to a new Location", Text.Travel(_gameCitizen, _gameMap.Locations), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Travel to a new Location", Text.Travel(_gameCitizen, _gameMap.GetLocationById(_gameCitizen.LocationID), _gameMap.Locations), ActionMenu.MainMenu, "");
 
             while(!validLocation)
             {
@@ -523,7 +523,7 @@ namespace TB_QuestGame
                 GetInteger($"Enter your new location {_gameCitizen.Name}: ", 1, _gameMap.GetMaxLocationId(), out locationId);
 
                 //validate int
-                if(_gameMap.isValidLocation(locationId))
+                if(_gameMap.isValidLocation(_gameCitizen.LocationID, locationId))
                 {
                     if(_gameMap.IsAccessibleLocation(locationId))
                     {

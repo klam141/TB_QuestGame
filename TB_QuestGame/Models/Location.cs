@@ -16,6 +16,7 @@ namespace TB_QuestGame
         private string _mapLocation;
         private string _description;
         private string _generalContents;
+        private int[] _canAccess;
         private bool _accessable;
         private int _experiencePoints;
         private List<Events> _events;
@@ -61,6 +62,12 @@ namespace TB_QuestGame
         {
             get { return _generalContents; }
             set { _generalContents = value; }
+        }
+
+        public int[] CanAccess
+        {
+            get { return _canAccess; }
+            set { _canAccess = value; }
         }
 
         public bool Accessable

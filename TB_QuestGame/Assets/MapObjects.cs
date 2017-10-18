@@ -13,58 +13,44 @@ namespace TB_QuestGame
 
             new Location
             {
-                CommonName = "Aion Base Lab",
+                CommonName = "Your Room",
                 LocationID = 1,
-                Date = 386759,
-                MapLocation = "P-3, SS-278, G-2976, LS-3976",
-                Description = "The Norlon Corporation research facility located in " +
-                    "the city of Heraklion on the north coast of Crete and the top secret " +
-                    "research lab for the Aion Project.\n",
-                GeneralContents =  "The lab is a large, well lit room, and staffed " +
-                    "by a small number of scientists, all wearing light blue uniforms with the " +
-                    "hydra-like Norlan Corporation logo. \n",
-                Accessable = true,
-                ExperiencePoints = 10
-            },
-
-            new Location
-            {
-                CommonName = "Felandrian Plains",
-                LocationID = 2,
-                Date = 386759,
-                MapLocation = "P-2, SS-85, G-2976, LS-3976",
-                Description = "The Felandrian Plains are a common destination for tourist. " +
-                    "Located just north of the equatorial line on the planet of Corlon, they " +
-                    "provide excellent habitat for a rich ecosystem of flora and fauna.",
+                Description = "Your room. You live here.",
                 GeneralContents = "- stuff in the room -",
+                CanAccess = new int[] { 2 },
                 Accessable = true,
                 ExperiencePoints = 10
             },
 
             new Location
             {
-                CommonName = "Xantoria Market",
+                CommonName = "Hallways",
+                LocationID = 2,
+                Description = "The hallways outside your room.",
+                GeneralContents = "At the end of the hallway is plaza 3. There is also a small storage closet nearby.",
+                CanAccess = new int[] { 1, 3, 4 },
+                Accessable = true,
+                ExperiencePoints = 10
+            },
+
+            new Location
+            {
+                CommonName = "Plaza 3",
                 LocationID = 3,
-                Date = 386759,
-                MapLocation = "P-6, SS-3978, G-2976, LS-3976",
-                Description = "The Xantoria market, once controlled by the Thorian elite, is now an " +
-                              "open market managed by the Xantorian Commerce Coop. It is a place " +
-                              "where many races from various systems trade goods.",
-                GeneralContents ="- stuff in the room -" ,
-                Accessable = false,
+                Description = "The plaza closest to your room",
+                GeneralContents ="There are many shops here. You are also near a food court" ,
+                CanAccess = new int[] { 2, 5 },
+                Accessable = true,
                 ExperiencePoints = 20
             },
 
             new Location
             {
-                CommonName = "Norlon Corporate Headquarters",
+                CommonName = "Storage Closet",
                 LocationID = 4,
-                Date = 386759,
-                MapLocation = "P-3, SS-278, G-2976, LS-3976",
-                Description = "The Norlon Corporation Headquarters is located in just outside of Detroit Michigan." +
-                              "Norlon, founded in 1985 as a bio-tech company, is now a 36 billion dollar company " +
-                              "with huge holdings in defense and space research and development.",
+                Description = "It's a small storage closet.",
                 GeneralContents = "Having Learned your lesson the first time you avoid the tack. The Room is pretty uninteresting otherwise",
+                CanAccess = new int[] { 2 },
                 Accessable = true,
                 ExperiencePoints = -10,
                 Events = new List<Events>() { Events.Death },
@@ -74,15 +60,16 @@ namespace TB_QuestGame
 
             new Location
             {
-                CommonName = "Your Room",
+                CommonName = "Food Court",
                 LocationID = 5,
-                Date = 1,
-                MapLocation = "1",
-                Description = "Your room. You live here.",
-                GeneralContents = "- stuff in the room -",
+                Description = "You can eat here",
+                GeneralContents ="The food court is much smaller than the ones in the larger plazas, but it still has a large vareity of restaurants." ,
+                CanAccess = new int[] { 3 },
                 Accessable = true,
-                ExperiencePoints = 10
-            }
+                ExperiencePoints = 20
+            },
+
+
         };
     }
 }

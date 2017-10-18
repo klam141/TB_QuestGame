@@ -16,7 +16,7 @@ namespace TB_QuestGame
     }
 
     public enum EventTypes
-    {
+    {   
         FirstTimeOnly,
         OnEnter,
         OnLookAround

@@ -195,7 +195,7 @@ namespace TB_QuestGame
             return "I don't recognise that command.";
         }
 
-        public static string Travel(Citizen gameCitizen, List<Location> locations)
+        public static string Travel(Citizen gameCitizen, Location currentLocation, List<Location> locations)
         {
             string messageBoxText =
                 $"{gameCitizen.Name}, Aion Base will need to know the name of the new location.\n" +
@@ -206,11 +206,10 @@ namespace TB_QuestGame
                 LocationTableHeader(true);
 
 
-
             string locationList = null;
             foreach (Location location in locations)
             {
-                if (location.LocationID != gameCitizen.LocationID)
+                if (location.LocationID != gameCitizen.LocationID && currentLocation.CanAccess.Contains(location.LocationID))
                 {
                     locationList +=
                         $"{location.LocationID}".PadRight(10) +

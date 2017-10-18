@@ -166,7 +166,7 @@ namespace TB_QuestGame
             _gameCitizen.Race = Citizen.Race;
             _gameCitizen.HomePlanet = Citizen.HomePlanet;
 
-            _gameCitizen.Status = "Healthy";
+            _gameCitizen.Status = Citizen.Statuses.Healthy;
             _gameCitizen.Lives = 3;
             _gameCitizen.Health = 100;
             _gameCitizen.Exp = 0;
@@ -196,7 +196,7 @@ namespace TB_QuestGame
                     _gameCitizen.Health = 100;
 
                     //respawns you at your quarters
-                    UpdateLocation(5);
+                    UpdateLocation(1);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ namespace TB_QuestGame
                 switch (e)
                 {
                     case Events.Death:
-                        _gameCitizen.Health += -9999;
+                        _gameCitizen.Health = -9999;
                         break;
 
                     //TODO other events

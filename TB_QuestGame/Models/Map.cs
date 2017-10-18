@@ -35,14 +35,16 @@ namespace TB_QuestGame
             _locations = MapObjects.Locations;
         }
 
-        public bool isValidLocation(int locationId)
+        public bool isValidLocation(int currentId, int locationId)
         {
             List<int> LocationIds = new List<int>();
+
+            Location currentLocation = GetLocationById(currentId);
 
 
             foreach (Location l in _locations) { LocationIds.Add(l.LocationID); }
 
-            if (LocationIds.Contains(locationId)) return true;
+            if (LocationIds.Contains(locationId) && currentLocation.CanAccess.Contains(locationId)) return true;
             else return false;
         }
 
