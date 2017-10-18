@@ -48,14 +48,19 @@ namespace TB_QuestGame
 
         public bool IsAccessibleLocation(int locationId)
         {
-
-            return false;
+            Location location = GetLocationById(locationId);
+            if (location.Accessable == true) return true;
+            else return false;
         }
 
         public int GetMaxLocationId()
         {
             int MaxId = 0;
 
+            foreach(Location l in Locations)
+            {
+                if (l.LocationID > MaxId) MaxId = l.LocationID;
+            }
 
             return MaxId;
         }
@@ -64,6 +69,16 @@ namespace TB_QuestGame
         {
             Location location = null;
 
+            foreach(Location l in _locations)
+            {
+                if (l.LocationID == Id) location = l;
+            }
+
+            if(location == null)
+            {
+                string feedbackMessage = $"The Location ID {Id} does not exist on the map";
+                throw new ArgumentException(Id.ToString(), feedbackMessage);
+            }
 
             return location;
         }

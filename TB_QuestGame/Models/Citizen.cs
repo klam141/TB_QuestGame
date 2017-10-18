@@ -18,8 +18,9 @@ namespace TB_QuestGame
 
         #region FIELDS
         string _status, _homePlanet;
-        int _health;
+        int _health, _lives, _exp;
         bool _isStunned;
+        private List<int> _locationsVisited;
 
         #endregion
 
@@ -39,7 +40,19 @@ namespace TB_QuestGame
         public int Health
         {
             get { return _health; }
-            set { _health += value; }
+            set { _health = value; }
+        }
+
+        public int Lives
+        {
+            get { return _lives; }
+            set { _lives = value; }
+        }
+
+        public int Exp
+        {
+            get { return _exp; }
+            set { _exp = value; }
         }
 
         public bool IsStunned
@@ -48,20 +61,28 @@ namespace TB_QuestGame
             set { _isStunned = value; }
         }
 
+        public List<int> LocationsVisited
+        {
+            get { return _locationsVisited; }
+            set { _locationsVisited = value; }
+        }
+
         #endregion
 
         #region CONSTRUCTORS
 
         public Citizen()
         {
-
+            
+            _locationsVisited = new List<int>();
         }
 
-        public Citizen(string name, RaceType race) : base(name, race)
+        public Citizen(string name, RaceType race, int locationID) : base(name, race, locationID)
         {
             _status = "Healthy";
             _health = 100;
             _isStunned = false;
+            _locationsVisited = new List<int>();
         }
 
         #endregion
@@ -71,6 +92,12 @@ namespace TB_QuestGame
         public override string Greeting()
         {
             return $"Hi. I'm {base.Name}. I'm {base.Age} years old. I'm from {_homePlanet}";
+        }
+
+        public bool HasVisited(int locationID)
+        {
+            if (LocationsVisited.Contains(locationID)) return true;
+            else return false;
         }
 
         #endregion

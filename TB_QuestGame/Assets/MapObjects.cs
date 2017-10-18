@@ -66,7 +66,7 @@ namespace TB_QuestGame
                               "with huge holdings in defense and space research and development.",
                 GeneralContents = "- stuff in the room -",
                 Accessable = true,
-                ExperiencePoints = 10
+                ExperiencePoints = -10
             },
 
             new Location

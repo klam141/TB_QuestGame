@@ -30,10 +30,12 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string CurrrentLocationInfo()
+        public static string CurrentLocationInfo(Location location)
         {
             string messageBoxText =
-            "You are standing in your quarters. The light is off and you cannot see.";
+                $"Current Location: {location.CommonName}\n" +
+                " \n" +
+                location.Description;
 
             return messageBoxText;
         }
@@ -112,6 +114,28 @@ namespace TB_QuestGame
 
         #region MAIN MENU ACTION SCREENS
 
+        public static string LocationTableHeader(bool showIsAccessable)
+        {
+            //Table header for listing locations
+            string messageBoxText;
+
+            string tableLine1 = "ID".PadRight(10) + "Name".PadRight(30);
+            string tableLine2 = "---".PadRight(10) + "----------------------".PadRight(30);
+
+            if(showIsAccessable)
+            {
+                tableLine1 += "Accessible".PadRight(10);
+                tableLine2 += "-------".PadRight(10);
+            }
+
+            tableLine1 += "\n";
+            tableLine2 += "\n";
+
+            messageBoxText = tableLine1 + tableLine2;
+
+            return messageBoxText;
+        }
+
         public static string CitizenInfo(Citizen gameCitizen)
         {
             string messageBoxText =
@@ -126,12 +150,33 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string ListLocations(IEnumerable<Location> Locations)
+        public static List<string> StatusBox(Citizen gameCitizen, Map gameMap)
+        {
+            List<string> statusBoxText = new List<string>();
+
+            statusBoxText.Add($"Traveler's Age: {gameCitizen.Age}\n");
+            statusBoxText.Add($"Lives: {gameCitizen.Lives}\n");
+            statusBoxText.Add($"Health: {gameCitizen.Health}\n");
+            statusBoxText.Add($"Experience Points: {gameCitizen.Exp}\n");
+
+            return statusBoxText;
+        }
+
+        public static string LookAround(Location location)
         {
             string messageBoxText = 
-                "Locations\n" +
+                $"Current Location: {location.CommonName}\n" +
                 " \n" +
-                "ID".PadRight(10) + "Name".PadRight(30) + "\n";
+                location.GeneralContents;
+
+            return messageBoxText;
+        }
+        
+        public static string ListLocations(IEnumerable<Location> Locations)
+        {
+            string messageBoxText =
+                //Display Table Header
+                LocationTableHeader(false);
 
             string LocationList = null;
             foreach (Location location in Locations)
@@ -150,29 +195,56 @@ namespace TB_QuestGame
             return "I don't recognise that command.";
         }
 
-        //public static string Travel(int currentSpaceTimeLocationId, List<Location> spaceTimeLocations)
-        //{
-        //    string messageBoxText =
-        //        $"{gameCitizen.Name}, Aion Base will need to know the name of the new location.\n" +
-        //        " \n" +
-        //        "Enter the ID number of your desired location from the table below.\n" +
-        //        " \n";
+        public static string Travel(Citizen gameCitizen, List<Location> locations)
+        {
+            string messageBoxText =
+                $"{gameCitizen.Name}, Aion Base will need to know the name of the new location.\n" +
+                " \n" +
+                "Enter the ID number of your desired location from the table below.\n" +
+                " \n" +
+                //Display Table Header
+                LocationTableHeader(true);
 
 
-        //    string spaceTimeLocationList = null;
 
-        //    foreach (Location spaceTimeLocation in spaceTimeLocations)
-        //    {
-        //        if (race != Character.RaceType.None)
-        //        {
-        //            raceList += $"\t{race}\n";
-        //        }
-        //    }
+            string locationList = null;
+            foreach (Location location in locations)
+            {
+                if (location.LocationID != gameCitizen.LocationID)
+                {
+                    locationList +=
+                        $"{location.LocationID}".PadRight(10) +
+                        $"{location.CommonName}".PadRight(30) +
+                        $"{location.Accessable}".PadRight(10) +
+                        Environment.NewLine;
+                }
+            }
 
-        //    messageBoxText += raceList;
+            messageBoxText += locationList;
 
-        //    return messageBoxText;
-        //}
+            return messageBoxText;
+        }
+
+        public static string VisitedLocations(IEnumerable<Location> locations)
+        {
+            string messageBoxText = 
+                "Locations Visited\n" +
+                " \n" +
+                LocationTableHeader(false);
+
+            string locationList = null;
+            foreach(Location location in locations)
+            {
+                locationList +=
+                    $"{location.LocationID}".PadRight(10) +
+                    $"{location.CommonName}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += locationList;
+
+            return messageBoxText;
+        }
 
         #endregion
     }

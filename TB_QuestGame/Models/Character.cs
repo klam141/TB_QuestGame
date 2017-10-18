@@ -26,7 +26,7 @@ namespace TB_QuestGame
         #region FIELDS
 
         private string _name;
-        private int _age;
+        private int _age, _locationID;
         private RaceType _race;
         private bool _isAlive;
 
@@ -44,6 +44,12 @@ namespace TB_QuestGame
         {
             get { return _age; }
             set { _age = value; }
+        }
+
+        public int LocationID
+        {
+            get { return _locationID; }
+            set { _locationID = value; }
         }
 
         public RaceType Race
@@ -67,10 +73,11 @@ namespace TB_QuestGame
 
         }
 
-        public Character(string name, RaceType race)
+        public Character(string name, RaceType race, int locationID)
         {
             _name = name;
             _race = race;
+            _locationID = locationID;
         }
 
         #endregion
