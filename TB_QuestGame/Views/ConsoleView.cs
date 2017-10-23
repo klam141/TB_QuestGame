@@ -62,8 +62,12 @@ namespace TB_QuestGame
         /// <param name="messageBoxText">message box text</param>
         /// <param name="menu">menu to use</param>
         /// <param name="inputBoxPrompt">input box text</param>
-        public void DisplayGamePlayScreen(string messageBoxHeaderText, string messageBoxText, Menu menu, string inputBoxPrompt)
+        public void DisplayGamePlayScreen(string messageBoxText, Menu menu, string inputBoxPrompt)
         {
+            string currentLocation;// = _gameMap.GetLocationById(_gameCitizen.LocationID).CommonName;
+            if (_gameCitizen.LocationID == 0) currentLocation = "";
+            else currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID).CommonName;
+
             //
             // reset screen to default window colors
             //
@@ -74,7 +78,7 @@ namespace TB_QuestGame
             ConsoleWindowHelper.DisplayHeader(Text.HeaderText);
             ConsoleWindowHelper.DisplayFooter(Text.FooterText);
 
-            DisplayMessageBox(messageBoxHeaderText, messageBoxText);
+            DisplayMessageBox(currentLocation, messageBoxText);
             DisplayMenuBox(menu);
             DisplayInputBox();
             DisplayStatusBox();
@@ -441,20 +445,20 @@ namespace TB_QuestGame
             //
             // intro
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionIntro(), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen(Text.InitializeMissionIntro(), ActionMenu.MissionIntro, "");
             GetContinueKey();
 
             //
             // get Citizen's name
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetCitizenName(), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen(Text.InitializeMissionGetCitizenName(), ActionMenu.MissionIntro, "");
             DisplayInputBoxPrompt("Enter your name: ");
             Citizen.Name = GetString();
 
             //
             // get Citizen's age
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetCitizenAge(Citizen), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen(Text.InitializeMissionGetCitizenAge(Citizen), ActionMenu.MissionIntro, "");
             int gameCitizenAge;
 
             GetInteger($"Enter your age, {Citizen.Name}: ", 0, 1000000, out gameCitizenAge);
@@ -463,7 +467,7 @@ namespace TB_QuestGame
             //
             // get home planet
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionGetCitizenPlanet(Citizen), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen(Text.InitializeMissionGetCitizenPlanet(Citizen), ActionMenu.MissionIntro, "");
 
             DisplayInputBoxPrompt($"Enter your home planet, {Citizen.Name}: ");
             Citizen.HomePlanet = GetString();
@@ -471,7 +475,7 @@ namespace TB_QuestGame
             //
             // echo the Citizen's info
             //
-            DisplayGamePlayScreen("Your Quarters", Text.InitializeMissionEchoCitizenInfo(Citizen), ActionMenu.MissionIntro, "");
+            DisplayGamePlayScreen(Text.InitializeMissionEchoCitizenInfo(Citizen), ActionMenu.MissionIntro, "");
             GetContinueKey();
 
             // 
@@ -486,7 +490,7 @@ namespace TB_QuestGame
         public void DisplayEventText()
         {
             Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
-            DisplayGamePlayScreen("", Text.EventText(currentLocation), ActionMenu.None, "");
+            DisplayGamePlayScreen(Text.EventText(currentLocation), ActionMenu.None, "");
 
             GetContinueKey();
         }
@@ -495,19 +499,25 @@ namespace TB_QuestGame
 
         public void DisplayCitizenInfo()
         {
-            DisplayGamePlayScreen("Citizen Information", Text.CitizenInfo(_gameCitizen), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.CitizenInfo(_gameCitizen), ActionMenu.MainMenu, "");
             Console.Write(_gameCitizen.HomePlanet);
         }
 
         public void DisplayLookAround()
         {
             Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
-            DisplayGamePlayScreen("Current Location", Text.LookAround(currentLocation), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.LookAround(currentLocation), ActionMenu.MainMenu, "");
+        }
+
+        public void DisplayLocationInfo()
+        {
+            Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
+            DisplayGamePlayScreen(Text.CurrentLocationInfo(currentLocation), ActionMenu.MainMenu, "");
         }
 
         public void DisplayListOfLocations()
         {
-            DisplayGamePlayScreen("Locations", Text.ListLocations(_gameMap.Locations), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.ListLocations(_gameMap.Locations), ActionMenu.MainMenu, "");
         }
 
         public int DisplayGetNextLocation()
@@ -515,7 +525,7 @@ namespace TB_QuestGame
             int locationId = 0;
             bool validLocation = false;
 
-            DisplayGamePlayScreen("Travel to a new Location", Text.Travel(_gameCitizen, _gameMap.GetLocationById(_gameCitizen.LocationID), _gameMap.Locations), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.Travel(_gameCitizen, _gameMap.GetLocationById(_gameCitizen.LocationID), _gameMap.Locations), ActionMenu.MainMenu, "");
 
             while(!validLocation)
             {
@@ -552,13 +562,18 @@ namespace TB_QuestGame
                 visitedLocations.Add(_gameMap.GetLocationById(locationId));
             }
 
-            DisplayGamePlayScreen("Locations Visited", Text.VisitedLocations(visitedLocations), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.VisitedLocations(visitedLocations), ActionMenu.MainMenu, "");
         }
 
 
         public void DisplayExit() {
-            DisplayGamePlayScreen("", "Thanks for playing!", ActionMenu.ExitMenu, "");
+            DisplayGamePlayScreen("Thanks for playing!", ActionMenu.ExitMenu, "");
             GetContinueKey();
+        }
+
+
+        public void UpdateDisplay() {
+
         }
 
         #endregion

@@ -81,7 +81,7 @@ namespace TB_QuestGame
             //
             // display introductory message
             //
-            _gameConsoleView.DisplayGamePlayScreen("Mission Intro", Text.MissionIntro(), ActionMenu.MissionIntro, "");
+            _gameConsoleView.DisplayGamePlayScreen(Text.MissionIntro(), ActionMenu.MissionIntro, "");
             _gameConsoleView.GetContinueKey();
 
             //
@@ -93,7 +93,7 @@ namespace TB_QuestGame
             // prepare game play screen
             //
             _currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
-            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+            _gameConsoleView.DisplayGamePlayScreen(Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
 
             //
             // game loop
@@ -173,6 +173,12 @@ namespace TB_QuestGame
             _gameCitizen.IsStunned = false;
         }
 
+        private void UpdateGame()
+        {
+            UpdateGameStatus();
+            UpdateDisplay();
+        }
+
         private void UpdateGameStatus()
         {
             if (!_gameCitizen.HasVisited(_currentLocation.LocationID))
@@ -205,13 +211,23 @@ namespace TB_QuestGame
             }
         }
 
+        private void UpdateDisplay()
+        {
+            string displayText = "";
+            Menu CurrentMenu = ActionMenu.MainMenu;
+            string promptText = "";
+
+
+            _gameConsoleView.DisplayGamePlayScreen(displayText, CurrentMenu, promptText);
+        }
+
         private void UpdateLocation(int newLocation)
         {
             _gameCitizen.LocationID = newLocation;
             _currentLocation = _gameMap.GetLocationById(newLocation);
 
             //show new location's info
-            _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
+            _gameConsoleView.DisplayLocationInfo();
         }
 
         private void TriggerEvents()

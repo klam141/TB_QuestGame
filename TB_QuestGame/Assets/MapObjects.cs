@@ -4,72 +4,114 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TB_QuestGame
+namespace TB_QuestGame.Assets
 {
-    public static class MapObjects
+    public static partial class MapObjects
     {
-        public static List<Location> Locations = new List<Location>()
+        public static List<GameObject> gameObjects = new List<GameObject>()
         {
-
-            new Location
+            new CitizenObject
             {
-                CommonName = "Your Room",
-                LocationID = 1,
-                Description = "Your room. You live here.",
-                GeneralContents = "- stuff in the room -",
-                CanAccess = new int[] { 2 },
-                Accessable = true,
-                ExperiencePoints = 10
+                Id = 1,
+                Name = "Bag of Gold",
+                LocationId = 2,
+                Description = "A small leather pouch filled with 9 gold coins.",
+                Type = ObjectType.Currency,
+                Value = 45,
+                CanInventory = true,
+                IsConsumable = true,
+                IsVisible = true
             },
 
-            new Location
+            new CitizenObject
             {
-                CommonName = "Hallways",
-                LocationID = 2,
-                Description = "The hallways outside your room.",
-                GeneralContents = "At the end of the hallway is plaza 3. There is also a small storage closet nearby.",
-                CanAccess = new int[] { 1, 3, 4 },
-                Accessable = true,
-                ExperiencePoints = 10
+                Id = 2,
+                Name = "Ruby of Saron",
+                LocationId = 3,
+                Description = "A bright red jewel, roughly the size of a robin's egg.",
+                Type = ObjectType.Currency,
+                Value = 45,
+                CanInventory = true,
+                IsConsumable = true,
+                IsVisible = true
             },
 
-            new Location
+            new CitizenObject
             {
-                CommonName = "Plaza 3",
-                LocationID = 3,
-                Description = "The plaza closest to your room",
-                GeneralContents ="There are many shops here. You are also near a food court" ,
-                CanAccess = new int[] { 2, 5 },
-                Accessable = true,
-                ExperiencePoints = 20
+                Id = 3,
+                Name = "Rotogenic Medicine",
+                LocationId = 3,
+                Description = "A wooden box containing a small vial filled with a blue liquid.",
+                Type = ObjectType.Medicine,
+                Value = 45,
+                CanInventory = false,
+                IsConsumable = true,
+                IsVisible = true
             },
 
-            new Location
+            new CitizenObject
             {
-                CommonName = "Storage Closet",
-                LocationID = 4,
-                Description = "It's a small storage closet.",
-                GeneralContents = "Having Learned your lesson the first time you avoid the tack. The Room is pretty uninteresting otherwise",
-                CanAccess = new int[] { 2 },
-                Accessable = true,
-                ExperiencePoints = -10,
-                Events = new List<Events>() { Events.Death },
-                EventTypes = new List<EventTypes>() { EventTypes.FirstTimeOnly },
-                EventDescription = "You step on a tack and die."
+                Id = 4,
+                Name = "Norlan Document ND-3075",
+                LocationId = 3,
+                Description =
+                    "Memo: Origin Errata" + "/n" +
+                    "Universal Date: 378598" + "/n" +
+                    "/n" +
+                    "It appears a potential origin for the technology is based on Plenatia 5 in the Star Reach Galaxy.",
+                Type = ObjectType.Information,
+                Value = 0,
+                CanInventory = true,
+                IsConsumable = false,
+                IsVisible = true
             },
 
-            new Location
+            new CitizenObject
             {
-                CommonName = "Food Court",
-                LocationID = 5,
-                Description = "You can eat here",
-                GeneralContents ="The food court is much smaller than the ones in the larger plazas, but it still has a large vareity of restaurants." ,
-                CanAccess = new int[] { 3 },
-                Accessable = true,
-                ExperiencePoints = 20
+                Id = 8,
+                Name = "Aion Tracker",
+                LocationId = 0,
+                Description =
+                    "Standard issue device worn around wrist that allows for tracking and messaging.",
+                Type = ObjectType.Information,
+                Value = 0,
+                CanInventory = true,
+                IsConsumable = false,
+                IsVisible = true
             },
 
+            new CitizenObject
+            {
+                Id = 9,
+                Name = "RatPak 47",
+                LocationId = 0,
+                Description =
+                    "Standard issue ration package contain nutrients for 72 hours.",
+                Type = ObjectType.Food,
+                Value = 0,
+                CanInventory = true,
+                IsConsumable = true,
+                IsVisible = true
+            }
+            /*
+            new LocationObject
+            {
+                Id = 5,
+                Name = "Boldendorian Chest",
+                LocationId = 2,
+                Description = "A large wooden chest adorned with jewels.",
+                IsDeadly = true
+            },
 
+            new LocationObject
+            {
+                Id = 6,
+                Name = "Silver Mirror",
+                LocationId = 2,
+                Description = "A small silver mirror hanging on the wall next to a small window.",
+                IsDeadly = true
+            }
+            */
         };
     }
 }

@@ -10,6 +10,7 @@ namespace TB_QuestGame
     {
         #region FIELDS
         private List<Location> _locations;
+        private List<GameObject> _gameObjects;
         #endregion
 
 
