@@ -150,7 +150,7 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static List<string> StatusBox(Citizen gameCitizen, Map gameMap)
+        public static List<string> StatusBox(Citizen gameCitizen, GameMap gameMap)
         {
             List<string> statusBoxText = new List<string>();
 

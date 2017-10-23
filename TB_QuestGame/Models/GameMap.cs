@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TB_QuestGame
 {
-    public class Map
+    public class GameMap
     {
         #region FIELDS
         private List<Location> _locations;
@@ -22,7 +22,7 @@ namespace TB_QuestGame
 
 
         #region CONSTRUCTORS
-        public Map()
+        public GameMap()
         {
             InitMap();
         }

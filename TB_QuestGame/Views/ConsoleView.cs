@@ -27,7 +27,7 @@ namespace TB_QuestGame
         // declare game objects for the ConsoleView object to use
         //
         Citizen _gameCitizen;
-        Map _gameMap;
+        GameMap _gameMap;
 
         ViewStatus _viewStatus;
 
@@ -42,7 +42,7 @@ namespace TB_QuestGame
         /// <summary>
         /// default constructor to create the console view objects
         /// </summary>
-        public ConsoleView(Citizen gameCitizen, Map gameMap)
+        public ConsoleView(Citizen gameCitizen, GameMap gameMap)
         {
             _gameCitizen = gameCitizen;
             _gameMap = gameMap;

@@ -15,7 +15,7 @@ namespace TB_QuestGame
 
         private ConsoleView _gameConsoleView;
         private Citizen _gameCitizen;
-        private Map _gameMap;
+        private GameMap _gameMap;
         private bool _playingGame;
         private Location _currentLocation;
 
@@ -51,7 +51,7 @@ namespace TB_QuestGame
         private void InitializeGame()
         {
             _gameCitizen = new Citizen();
-            _gameMap = new Map();
+            _gameMap = new GameMap();
             _gameConsoleView = new ConsoleView(_gameCitizen, _gameMap);
             _playingGame = true;
 
@@ -217,12 +217,14 @@ namespace TB_QuestGame
         private void TriggerEvents()
         {
             //only do first time events on the first time
-            if (_currentLocation.EventTypes.Contains(EventTypes.FirstTimeOnly))
-            {
-                DoEvent();
-                _currentLocation.Events.Clear();
+            if (!(_currentLocation.EventTypes == null)) {
+                if (_currentLocation.EventTypes.Contains(EventTypes.FirstTimeOnly))
+                {
+                    DoEvent();
+                    _currentLocation.Events.Clear();
+                }
+                else DoEvent();
             }
-            else DoEvent();
         }
 
         private void DoEvent()
