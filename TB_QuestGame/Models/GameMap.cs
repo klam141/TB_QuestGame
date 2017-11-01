@@ -19,6 +19,11 @@ namespace TB_QuestGame
         {
             get { return _locations; }
         }
+
+        public List<GameObject> GameObjects
+        {
+            get { return _gameObjects; }
+        }
         #endregion
 
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TB_QuestGame.Assets
+namespace TB_QuestGame
 {
     public static partial class MapObjects
     {

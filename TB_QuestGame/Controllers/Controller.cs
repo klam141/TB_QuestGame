@@ -173,12 +173,6 @@ namespace TB_QuestGame
             _gameCitizen.IsStunned = false;
         }
 
-        private void UpdateGame()
-        {
-            UpdateGameStatus();
-            UpdateDisplay();
-        }
-
         private void UpdateGameStatus()
         {
             if (!_gameCitizen.HasVisited(_currentLocation.LocationID))
@@ -209,16 +203,8 @@ namespace TB_QuestGame
                     //TODO game over
                 }
             }
-        }
 
-        private void UpdateDisplay()
-        {
-            string displayText = "";
-            Menu CurrentMenu = ActionMenu.MainMenu;
-            string promptText = "";
-
-
-            _gameConsoleView.DisplayGamePlayScreen(displayText, CurrentMenu, promptText);
+            _gameConsoleView.DisplayStatusBox(); //Update status box info immeadiatly instead of waiting for the screen to update.
         }
 
         private void UpdateLocation(int newLocation)
