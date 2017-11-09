@@ -132,21 +132,27 @@ namespace TB_QuestGame
             bool validResponse = false;
             integerChoice = 0;
 
+            bool validateRange = (minimumValue != 0 || maximumValue != 0);
+
             DisplayInputBoxPrompt(prompt);
             while (!validResponse)
             {
                 if (int.TryParse(Console.ReadLine(), out integerChoice))
                 {
-                    if (integerChoice >= minimumValue && integerChoice <= maximumValue)
+                    if (validateRange)
                     {
-                        validResponse = true;
+                        if (integerChoice >= minimumValue && integerChoice <= maximumValue)
+                        {
+                            validResponse = true;
+                        }
+                        else
+                        {
+                            ClearInputBox();
+                            DisplayInputErrorMessage($"You must enter an integer value between {minimumValue} and {maximumValue}. Please try again.");
+                            DisplayInputBoxPrompt(prompt);
+                        }
                     }
-                    else
-                    {
-                        ClearInputBox();
-                        DisplayInputErrorMessage($"You must enter an integer value between {minimumValue} and {maximumValue}. Please try again.");
-                        DisplayInputBoxPrompt(prompt);
-                    }
+                    else validResponse = true;
                 }
                 else
                 {
@@ -234,10 +240,12 @@ namespace TB_QuestGame
         /// display the correct menu in the menu box of the game screen
         /// </summary>
         /// <param name="menu">menu for current game state</param>
-        private void DisplayMenuBox(Menu menu)
+        public void DisplayMenuBox(Menu menu)
         {
             Console.BackgroundColor = ConsoleTheme.MenuBackgroundColor;
             Console.ForegroundColor = ConsoleTheme.MenuBorderColor;
+
+
 
             //
             // display menu box border
@@ -262,6 +270,15 @@ namespace TB_QuestGame
             Console.BackgroundColor = ConsoleTheme.MenuBackgroundColor;
             Console.ForegroundColor = ConsoleTheme.MenuForegroundColor;
             int topRow = ConsoleLayout.MenuBoxPositionTop + 3;
+
+
+            //clear the menu items before displaying new ones
+            string clearString = new string(' ', ConsoleLayout.MenuBoxWidth-4);
+            for(int i = topRow; i < ConsoleLayout.MenuBoxHeight; i++)
+            {
+                Console.SetCursorPosition(ConsoleLayout.MenuBoxPositionLeft + 3, i);
+                Console.Write(clearString);
+            }
 
             foreach (KeyValuePair<char, CitizenAction> menuChoice in menu.MenuChoices)
             {
@@ -506,7 +523,10 @@ namespace TB_QuestGame
         public void DisplayLookAround()
         {
             Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
-            DisplayGamePlayScreen(Text.LookAround(currentLocation), ActionMenu.MainMenu, "");
+
+            List<GameObject> gameObjectsInCurrentLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationID);
+
+            DisplayGamePlayScreen(Text.LookAround(currentLocation, gameObjectsInCurrentLocation), ActionMenu.MainMenu, "");
         }
 
         public void DisplayLocationInfo()
@@ -517,7 +537,7 @@ namespace TB_QuestGame
 
         public void DisplayListOfLocations()
         {
-            DisplayGamePlayScreen(Text.ListLocations(_gameMap.Locations), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.ListLocations(_gameMap.Locations), ActionMenu.AdminMenu, "");
         }
 
         public int DisplayGetNextLocation()
@@ -533,7 +553,7 @@ namespace TB_QuestGame
                 GetInteger($"Enter your new location {_gameCitizen.Name}: ", 1, _gameMap.GetMaxLocationId(), out locationId);
 
                 //validate int
-                if(_gameMap.isValidLocation(_gameCitizen.LocationID, locationId))
+                if(_gameMap.IsValidLocation(_gameCitizen.LocationID, locationId))
                 {
                     if(_gameMap.IsAccessibleLocation(locationId))
                     {
@@ -565,15 +585,51 @@ namespace TB_QuestGame
             DisplayGamePlayScreen(Text.VisitedLocations(visitedLocations), ActionMenu.MainMenu, "");
         }
 
+        public void DisplayListOfGameObjects(IEnumerable<GameObject> gameObjects)
+        {
+            DisplayGamePlayScreen(Text.ListGameObjects(gameObjects, true), ActionMenu.AdminMenu, "");
+        }
+
+        public int DisplayGetGameObjectsToLookAt()
+        {
+            int gameObjectId = 0;
+
+
+            List<GameObject> gameObjectsInLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationID);
+
+            if(gameObjectsInLocation.Count > 0)
+            {
+                DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false), ActionMenu.MainMenu, "");
+
+                while(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationID)))
+                {
+                    GetInteger($"Enter the Id number of the object you want to look at: ", 0, 0, out gameObjectId);
+
+                    if(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationID)))
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                ClearInputBox();
+                DisplayGamePlayScreen("There is nothing to look at here.", ActionMenu.MainMenu, "");
+            }
+
+            return gameObjectId;
+        }
+
+        public void DisplayGameObjectInfo(GameObject gameObject)
+        {
+            DisplayGamePlayScreen(Text.LookAt(gameObject), ActionMenu.MainMenu, "");
+        }
+
 
         public void DisplayExit() {
             DisplayGamePlayScreen("Thanks for playing!", ActionMenu.ExitMenu, "");
             GetContinueKey();
-        }
-
-
-        public void UpdateDisplay() {
-
         }
 
         #endregion

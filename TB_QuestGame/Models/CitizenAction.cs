@@ -27,6 +27,8 @@ namespace TB_QuestGame
         ListDestinations,
         ListItems,
         ListTreasures,
+        AdminMenu,
+        ReturnToMainMenu,
         Exit
     }
 }

@@ -16,6 +16,7 @@ namespace TB_QuestGame
         private ConsoleView _gameConsoleView;
         private Citizen _gameCitizen;
         private GameMap _gameMap;
+        private Menu _currentMenu;
         private bool _playingGame;
         private Location _currentLocation;
 
@@ -53,6 +54,7 @@ namespace TB_QuestGame
             _gameCitizen = new Citizen();
             _gameMap = new GameMap();
             _gameConsoleView = new ConsoleView(_gameCitizen, _gameMap);
+            _currentMenu = ActionMenu.None;
             _playingGame = true;
 
             Console.CursorVisible = false;
@@ -92,6 +94,7 @@ namespace TB_QuestGame
             //
             // prepare game play screen
             //
+            _currentMenu = ActionMenu.MainMenu;
             _currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
             _gameConsoleView.DisplayGamePlayScreen(Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
 
@@ -103,8 +106,8 @@ namespace TB_QuestGame
                 //Process all flags, events, stats
                 UpdateGameStatus();
 
-
-                CitizenActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
+                
+                CitizenActionChoice = _gameConsoleView.GetActionMenuChoice(_currentMenu);
                 
 
                 //
@@ -116,13 +119,24 @@ namespace TB_QuestGame
                         break;
 
                     case CitizenAction.CitizenInfo:
-                        _gameConsoleView.DisplayCitizenInfo();
-                        
+                        _gameConsoleView.DisplayCitizenInfo();                        
                         break;
 
                     case CitizenAction.LookAround:
                         _gameConsoleView.DisplayLookAround();
                         TriggerEvents();
+                        break;
+
+                    case CitizenAction.LookAt:
+                        int gameObjectToLookAtId = _gameConsoleView.DisplayGetGameObjectsToLookAt();
+
+                        if(gameObjectToLookAtId != 0)
+                        {
+                            GameObject gameObject = _gameMap.GetGameObjectById(gameObjectToLookAtId);
+
+                            _gameConsoleView.DisplayGameObjectInfo(gameObject);
+                        }
+
                         break;
 
                     case CitizenAction.ListDestinations:
@@ -135,6 +149,19 @@ namespace TB_QuestGame
 
                     case CitizenAction.CitizenLocationsVisited:
                         _gameConsoleView.DisplayLocationsVisited();
+                        break;
+
+                    case CitizenAction.ListItems:
+                        _gameConsoleView.DisplayListOfGameObjects(_gameMap.GameObjects);
+                        break;
+
+                    case CitizenAction.AdminMenu:
+                        _currentMenu = ActionMenu.AdminMenu;
+                        break;
+
+                    case CitizenAction.ReturnToMainMenu:
+                        _currentMenu = ActionMenu.MainMenu;
+                        _gameConsoleView.DisplayLocationInfo();
                         break;
 
                     case CitizenAction.Exit:
@@ -204,7 +231,9 @@ namespace TB_QuestGame
                 }
             }
 
-            _gameConsoleView.DisplayStatusBox(); //Update status box info immeadiatly instead of waiting for the screen to update.
+            //Update status box and menu box info immeadiatly instead of waiting for the screen to update.
+            _gameConsoleView.DisplayMenuBox(_currentMenu);
+            _gameConsoleView.DisplayStatusBox();
         }
 
         private void UpdateLocation(int newLocation)

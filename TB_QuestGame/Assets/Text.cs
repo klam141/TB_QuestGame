@@ -136,6 +136,43 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
+        public static string GameObjectTable(IEnumerable<GameObject> gameObjects, bool showLocationId)
+        {
+            string messageboxText = "";
+
+            string tableLine1 = "ID".PadRight(10) + "Name".PadRight(30);
+            string tableLine2 = "---".PadRight(10) + "----------------------".PadRight(30);
+
+            if(showLocationId)
+            {
+                tableLine1 += "LocationID".PadRight(10);
+                tableLine2 += "----------------------".PadRight(10);
+            }
+
+            tableLine1 += "\n";
+            tableLine2 += "\n";
+
+            string objectList = null;
+            foreach (GameObject gameObject in gameObjects)
+            {
+                objectList +=
+                    $"{gameObject.Id}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30);
+
+                    if (showLocationId) objectList += $"{gameObject.LocationId}".PadRight(10);
+
+                    objectList += Environment.NewLine;
+            }
+
+            if (objectList == null) return messageboxText;
+            else
+            {
+                messageboxText = tableLine1 + tableLine2 + objectList;
+
+                return messageboxText;
+            }
+        }
+
         public static string CitizenInfo(Citizen gameCitizen)
         {
             string messageBoxText =
@@ -162,12 +199,14 @@ namespace TB_QuestGame
             return statusBoxText;
         }
 
-        public static string LookAround(Location location)
+        public static string LookAround(Location location, IEnumerable<GameObject> gameObjects)
         {
             string messageBoxText = 
                 $"Current Location: {location.CommonName}\n" +
                 " \n" +
-                location.GeneralContents;
+                location.GeneralContents +
+                Environment.NewLine + Environment.NewLine +
+                GameObjectTable(gameObjects, false);
 
             return messageBoxText;
         }
@@ -248,6 +287,35 @@ namespace TB_QuestGame
         public static string EventText(Location location)
         {
             string messageBoxText = location.EventDescription;
+
+            return messageBoxText;
+        }
+
+        public static string ListGameObjects(IEnumerable<GameObject> gameObjects, bool showLocationId)
+        {
+            string messageBoxText = "Game Objects: \n \n";
+
+            messageBoxText += GameObjectTable(gameObjects, showLocationId);
+
+            return messageBoxText;
+        }
+
+        public static string LookAt(GameObject gameObject)
+        {
+            string messageBoxText = 
+                $"{gameObject.Name} \n \n" +
+                $"{gameObject.Description} \n \n";
+
+            if (gameObject is CitizenObject)
+            {
+                CitizenObject citizenObject = gameObject as CitizenObject;
+
+                messageBoxText += $"The {citizenObject.Name} has a value of {citizenObject.Value} and ";
+
+                if (citizenObject.CanInventory) messageBoxText += "can be added to your inventory.";
+                else messageBoxText += "can not be added to your inventory.";
+            }
+            else messageBoxText += $"The {gameObject.Name} can not be added to your inventory.";            
 
             return messageBoxText;
         }

@@ -39,9 +39,10 @@ namespace TB_QuestGame
         private void InitMap()
         {
             _locations = MapObjects.Locations;
+            _gameObjects = MapObjects.gameObjects;
         }
 
-        public bool isValidLocation(int currentId, int locationId)
+        public bool IsValidLocation(int currentId, int locationId)
         {
             List<int> LocationIds = new List<int>();
 
@@ -51,6 +52,19 @@ namespace TB_QuestGame
             foreach (Location l in _locations) { LocationIds.Add(l.LocationID); }
 
             if (LocationIds.Contains(locationId) && currentLocation.CanAccess.Contains(locationId)) return true;
+            else return false;
+        }
+
+        public bool IsValidObjectByLocationId(int gameObjectId, int currentLocationId)
+        {
+            List<int> gameObjectIds = new List<int>();
+
+            foreach(GameObject gameObject in _gameObjects)
+            {
+                if (gameObject.LocationId == currentLocationId) gameObjectIds.Add(gameObject.Id);
+            }
+
+            if (gameObjectIds.Contains(gameObjectId)) return true;
             else return false;
         }
 
@@ -73,22 +87,52 @@ namespace TB_QuestGame
             return MaxId;
         }
 
-        public Location GetLocationById(int Id)
+        public Location GetLocationById(int id)
         {
-            Location location = null;
+            Location locationToReturn = null;
 
-            foreach(Location l in _locations)
+            foreach(Location location in _locations)
             {
-                if (l.LocationID == Id) location = l;
+                if (location.LocationID == id) locationToReturn = location;
             }
 
-            if(location == null)
+            if(locationToReturn == null)
             {
-                string feedbackMessage = $"The Location ID {Id} does not exist on the map";
-                throw new ArgumentException(Id.ToString(), feedbackMessage);
+                string feedbackMessage = $"The Location ID {id} does not exist on the map";
+                throw new ArgumentException(id.ToString(), feedbackMessage);
             }
 
-            return location;
+            return locationToReturn;
+        }
+
+        public GameObject GetGameObjectById(int id)
+        {
+            GameObject gameObjectToReturn = null;
+
+            foreach(GameObject gameObject in _gameObjects)
+            {
+                if (gameObject.Id == id) gameObjectToReturn = gameObject;
+            }
+
+            if(gameObjectToReturn == null)
+            {
+                string feedbackMessage = $"The Object ID {id} does not exist";
+                throw new ArgumentException(id.ToString(), feedbackMessage);
+            }
+
+            return gameObjectToReturn;
+        }
+
+        public List<GameObject> GetGameObjectsByLocationId(int locationId)
+        {
+            List<GameObject> gameObjects = new List<GameObject>();
+
+            foreach (GameObject gameObject in _gameObjects)
+            {
+                if (gameObject.LocationId == locationId) gameObjects.Add(gameObject);
+            }
+
+            return gameObjects;
         }
         #endregion
     }

@@ -11,6 +11,7 @@ namespace TB_QuestGame
     /// </summary>
     public static class ActionMenu
     {
+
         public static Menu None = new Menu()
         {
             MenuName = "",
@@ -49,11 +50,24 @@ namespace TB_QuestGame
                 {
                     { '1', CitizenAction.CitizenInfo },
                     { '2', CitizenAction.LookAround},
-                    { '3', CitizenAction.Travel},
-                    { '4', CitizenAction.CitizenLocationsVisited},
-                    { '5', CitizenAction.ListDestinations},
+                    { '3', CitizenAction.LookAt},
+                    { '4', CitizenAction.Travel},
+                    { '5', CitizenAction.CitizenLocationsVisited},
+                    { '6', CitizenAction.AdminMenu},
                     { '0', CitizenAction.Exit }
         }
+        };
+
+        public static Menu AdminMenu = new Menu()
+        {
+            MenuName = "AdminMenu",
+            MenuTitle = "Admin Menu",
+            MenuChoices = new Dictionary<char, CitizenAction>()
+            {
+                { '1', CitizenAction.ListDestinations },
+                { '2', CitizenAction.ListItems},
+                { '0', CitizenAction.ReturnToMainMenu}
+            }
         };
 
         public static Menu ExitMenu = new Menu()
