@@ -51,9 +51,12 @@ namespace TB_QuestGame
                     { '1', CitizenAction.CitizenInfo },
                     { '2', CitizenAction.LookAround},
                     { '3', CitizenAction.LookAt},
-                    { '4', CitizenAction.Travel},
-                    { '5', CitizenAction.CitizenLocationsVisited},
-                    { '6', CitizenAction.AdminMenu},
+                    { '4', CitizenAction.PickUpItem},
+                    { '5', CitizenAction.PutDownItem},
+                    { '6', CitizenAction.Inventory},
+                    { '7', CitizenAction.Travel},
+                    { '8', CitizenAction.CitizenLocationsVisited},
+                    { '9', CitizenAction.AdminMenu},
                     { '0', CitizenAction.Exit }
         }
         };

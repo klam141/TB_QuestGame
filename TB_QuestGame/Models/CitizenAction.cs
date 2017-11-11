@@ -19,6 +19,7 @@ namespace TB_QuestGame
         PickUpTreasure,
         PutDownItem,
         PutDownTreasure,
+        Inventory,
         Travel,
         CitizenInfo,
         CitizenInventory,

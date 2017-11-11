@@ -57,6 +57,9 @@ namespace TB_QuestGame
             _currentMenu = ActionMenu.None;
             _playingGame = true;
 
+            _gameCitizen.Inventory.Add(_gameMap.GetGameObjectById(8) as CitizenObject);
+            _gameCitizen.Inventory.Add(_gameMap.GetGameObjectById(9) as CitizenObject);
+
             Console.CursorVisible = false;
         }
 
@@ -139,8 +142,36 @@ namespace TB_QuestGame
 
                         break;
 
-                    case CitizenAction.ListDestinations:
-                        _gameConsoleView.DisplayListOfLocations();
+                    case CitizenAction.PickUpItem:
+                        int citizenObjectToPickUpId = _gameConsoleView.DisplayGetCitizenObjectToPickUp();
+
+                        if(citizenObjectToPickUpId != 0)
+                        {
+                            CitizenObject citizenObject = _gameMap.GetGameObjectById(citizenObjectToPickUpId) as CitizenObject;
+
+                            _gameCitizen.Inventory.Add(citizenObject);
+                            citizenObject.LocationId = 0;
+
+                            _gameConsoleView.DisplayConfirmPickUp(citizenObject);
+                        }
+                        break;
+
+                    case CitizenAction.PutDownItem:
+                        int citizenObjectToPutDownId = _gameConsoleView.DisplayGetCitizenObjectToPickUp();
+
+                        if (citizenObjectToPutDownId != 0)
+                        {
+                            CitizenObject citizenObject = _gameMap.GetGameObjectById(citizenObjectToPutDownId) as CitizenObject;
+
+                            _gameCitizen.Inventory.Remove(citizenObject);
+                            citizenObject.LocationId = _gameCitizen.LocationID;
+
+                            _gameConsoleView.DisplayConfirmDrop(citizenObject);
+                        }
+                        break;
+
+                    case CitizenAction.Inventory:
+                        _gameConsoleView.DisplayInventory();
                         break;
 
                     case CitizenAction.Travel:
@@ -151,12 +182,16 @@ namespace TB_QuestGame
                         _gameConsoleView.DisplayLocationsVisited();
                         break;
 
-                    case CitizenAction.ListItems:
-                        _gameConsoleView.DisplayListOfGameObjects(_gameMap.GameObjects);
-                        break;
-
                     case CitizenAction.AdminMenu:
                         _currentMenu = ActionMenu.AdminMenu;
+                        break;
+
+                    case CitizenAction.ListDestinations:
+                        _gameConsoleView.DisplayListOfLocations();
+                        break;
+
+                    case CitizenAction.ListItems:
+                        _gameConsoleView.DisplayListOfGameObjects(_gameMap.GameObjects);
                         break;
 
                     case CitizenAction.ReturnToMainMenu:

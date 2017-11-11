@@ -27,7 +27,9 @@ namespace TB_QuestGame
         string _homePlanet;
         int _health, _lives, _exp;
         bool _isStunned;
+
         private List<int> _locationsVisited;
+        private List<CitizenObject> _inventory;
 
         #endregion
 
@@ -74,6 +76,12 @@ namespace TB_QuestGame
             set { _locationsVisited = value; }
         }
 
+        public List<CitizenObject> Inventory
+        {
+            get { return _inventory; }
+            set { _inventory = value; }
+        }
+
         #endregion
 
         #region CONSTRUCTORS
@@ -82,6 +90,7 @@ namespace TB_QuestGame
         {
             
             _locationsVisited = new List<int>();
+            _inventory = new List<CitizenObject>();
         }
 
         public Citizen(string name, RaceType race, int locationID) : base(name, race, locationID)

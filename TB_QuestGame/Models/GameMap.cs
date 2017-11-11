@@ -68,6 +68,24 @@ namespace TB_QuestGame
             else return false;
         }
 
+        public bool IsValidCitizenObjectByLocationId(int citizenObjectId, int currentLocation)
+        {
+            List<int> citizenObjectIds = new List<int>();
+
+            //make list of object ids in current location
+            foreach(GameObject gameObject in _gameObjects)
+            {
+                if(gameObject.LocationId == currentLocation && gameObject is CitizenObject)
+                {
+                    citizenObjectIds.Add(gameObject.Id);
+                }
+            }
+
+            //check if object id is valid
+            if (citizenObjectIds.Contains(citizenObjectId)) return true;
+            else return false;
+        }
+
         public bool IsAccessibleLocation(int locationId)
         {
             Location location = GetLocationById(locationId);
@@ -133,6 +151,22 @@ namespace TB_QuestGame
             }
 
             return gameObjects;
+        }
+
+        public List<CitizenObject> GetCitizenObjectsByLocationId(int locationId)
+        {
+            List<CitizenObject> citizenObjects = new List<CitizenObject>();
+
+            //get list of all objects in current location
+            foreach(GameObject gameObject in _gameObjects)
+            {
+                if (gameObject.LocationId == locationId && gameObject is CitizenObject)
+                {
+                    citizenObjects.Add(gameObject as CitizenObject);
+                }
+            }
+
+            return citizenObjects;
         }
         #endregion
     }

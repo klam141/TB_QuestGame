@@ -136,12 +136,18 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string GameObjectTable(IEnumerable<GameObject> gameObjects, bool showLocationId)
+        public static string GameObjectTable(IEnumerable<GameObject> gameObjects, bool showType, bool showLocationId)
         {
             string messageboxText = "";
 
             string tableLine1 = "ID".PadRight(10) + "Name".PadRight(30);
             string tableLine2 = "---".PadRight(10) + "----------------------".PadRight(30);
+
+            if(showType)
+            {
+                tableLine1 += "Type".PadRight(10);
+                tableLine2 += "----------------------".PadRight(10);
+            }
 
             if(showLocationId)
             {
@@ -206,7 +212,7 @@ namespace TB_QuestGame
                 " \n" +
                 location.GeneralContents +
                 Environment.NewLine + Environment.NewLine +
-                GameObjectTable(gameObjects, false);
+                GameObjectTable(gameObjects, false, false);
 
             return messageBoxText;
         }
@@ -291,11 +297,11 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string ListGameObjects(IEnumerable<GameObject> gameObjects, bool showLocationId)
+        public static string ListGameObjects(IEnumerable<GameObject> gameObjects, bool showType, bool showLocationId)
         {
             string messageBoxText = "Game Objects: \n \n";
 
-            messageBoxText += GameObjectTable(gameObjects, showLocationId);
+            messageBoxText += GameObjectTable(gameObjects, showType, showLocationId);
 
             return messageBoxText;
         }
@@ -316,6 +322,15 @@ namespace TB_QuestGame
                 else messageBoxText += "can not be added to your inventory.";
             }
             else messageBoxText += $"The {gameObject.Name} can not be added to your inventory.";            
+
+            return messageBoxText;
+        }
+
+        public static string CurrentInventory(IEnumerable<CitizenObject> inventory)
+        {
+            string messageBoxText = "Inventory \n \n";
+
+            messageBoxText += GameObjectTable(inventory, true, false);
 
             return messageBoxText;
         }

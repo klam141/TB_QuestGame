@@ -587,7 +587,7 @@ namespace TB_QuestGame
 
         public void DisplayListOfGameObjects(IEnumerable<GameObject> gameObjects)
         {
-            DisplayGamePlayScreen(Text.ListGameObjects(gameObjects, true), ActionMenu.AdminMenu, "");
+            DisplayGamePlayScreen(Text.ListGameObjects(gameObjects, false, true), ActionMenu.AdminMenu, "");
         }
 
         public int DisplayGetGameObjectsToLookAt()
@@ -599,7 +599,7 @@ namespace TB_QuestGame
 
             if(gameObjectsInLocation.Count > 0)
             {
-                DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false), ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false, false), ActionMenu.MainMenu, "");
 
                 while(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationID)))
                 {
@@ -625,6 +625,106 @@ namespace TB_QuestGame
         {
             DisplayGamePlayScreen(Text.LookAt(gameObject), ActionMenu.MainMenu, "");
         }
+
+        public int DisplayGetCitizenObjectToPickUp()
+        {
+            int gameObjectId = 0;
+            bool canPickUpObjectInLocation = false;
+            
+            List<GameObject> gameObjectsInLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationID);
+
+            //check if an object in the location can be picked up
+            foreach(GameObject gameObject in gameObjectsInLocation)
+            {
+                if(gameObject is CitizenObject)
+                {
+                    if ((gameObject as CitizenObject).CanInventory) canPickUpObjectInLocation = true;
+                }
+            }
+
+            if (canPickUpObjectInLocation)
+            {
+                DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false, false), ActionMenu.MainMenu, "");
+
+                //check if object is in the area and if it can be put in the inventory
+                while (!(_gameMap.IsValidCitizenObjectByLocationId(gameObjectId, _gameCitizen.LocationID) && (_gameMap.GetGameObjectById(gameObjectId) as CitizenObject).CanInventory))
+                {
+                    GetInteger($"Enter the Id number of the object you want to pick up: ", 0, 0, out gameObjectId);
+
+                    //display error messages
+                    if (!_gameMap.IsValidCitizenObjectByLocationId(gameObjectId, _gameCitizen.LocationID))
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
+                    }
+                    else if (!(_gameMap.GetGameObjectById(gameObjectId) as CitizenObject).CanInventory)
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("You can not add that item to your inventory.");
+                    }
+                }
+            }
+            else
+            {
+                ClearInputBox();
+                DisplayGamePlayScreen("There is nothing to pick up here.", ActionMenu.MainMenu, "");
+            }
+
+            return gameObjectId;
+        }
+
+        public int DisplayGetCitizenObjectToPutDown()
+        {
+            int citizenObjectId = 0;
+            bool inventoryContainsItem = false;
+
+            if (_gameCitizen.Inventory.Count > 0)
+            {
+                DisplayGamePlayScreen(Text.ListGameObjects(_gameCitizen.Inventory, false, false), ActionMenu.MainMenu, "");
+
+                //check if object is in inventory
+                while (!inventoryContainsItem)
+                {
+                    GetInteger($"Enter the Id number of the object you want to put down: ", 0, 0, out citizenObjectId);
+
+                    //check if inventory contains item
+                    foreach(CitizenObject citizenObject in _gameCitizen.Inventory)
+                    {
+                        if (citizenObject.Id == citizenObjectId) inventoryContainsItem = true;
+                    }
+
+                    //display error messages
+                    if (inventoryContainsItem)
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                ClearInputBox();
+                DisplayGamePlayScreen("There is nothing to put down.", ActionMenu.MainMenu, "");
+            }
+
+            return citizenObjectId;
+        }
+
+        public void DisplayConfirmPickUp(CitizenObject o)
+        {
+            DisplayGamePlayScreen($"The {o.Name} has been added to your inventory", ActionMenu.MainMenu, "");
+        }
+
+        public void DisplayConfirmDrop(CitizenObject o)
+        {
+            DisplayGamePlayScreen($"The {o.Name} has been removed from your inventory", ActionMenu.MainMenu, "");
+        }
+
+        public void DisplayInventory()
+        {
+            DisplayGamePlayScreen(Text.CurrentInventory(_gameCitizen.Inventory), ActionMenu.MainMenu, "");
+        }
+
 
 
         public void DisplayExit() {
