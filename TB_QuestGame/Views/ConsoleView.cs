@@ -704,7 +704,7 @@ namespace TB_QuestGame
             else
             {
                 ClearInputBox();
-                DisplayGamePlayScreen("There is nothing to put down.", ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("You are not holding anything.", ActionMenu.MainMenu, "");
             }
 
             return citizenObjectId;
