@@ -196,11 +196,11 @@ namespace TB_QuestGame
         public static List<string> StatusBox(Citizen gameCitizen, GameMap gameMap)
         {
             List<string> statusBoxText = new List<string>();
-
-            statusBoxText.Add($"Traveler's Age: {gameCitizen.Age}\n");
+            
             statusBoxText.Add($"Lives: {gameCitizen.Lives}\n");
             statusBoxText.Add($"Health: {gameCitizen.Health}\n");
             statusBoxText.Add($"Experience Points: {gameCitizen.Exp}\n");
+            statusBoxText.Add($"Money: {gameCitizen.Money}\n");
 
             return statusBoxText;
         }
@@ -316,10 +316,16 @@ namespace TB_QuestGame
             {
                 CitizenObject citizenObject = gameObject as CitizenObject;
 
-                messageBoxText += $"The {citizenObject.Name} has a value of {citizenObject.Value} and ";
+                messageBoxText += $"The {citizenObject.Name} ";
 
                 if (citizenObject.CanInventory) messageBoxText += "can be added to your inventory.";
                 else messageBoxText += "can not be added to your inventory.";
+            }
+            else if(gameObject is TreasureObject)
+            {
+                TreasureObject treasureObject = gameObject as TreasureObject;
+
+                messageBoxText += $"The {treasureObject.Name} has a value of {treasureObject.Value}";
             }
             else messageBoxText += $"The {gameObject.Name} can not be added to your inventory.";            
 

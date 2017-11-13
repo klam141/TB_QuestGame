@@ -86,6 +86,24 @@ namespace TB_QuestGame
             else return false;
         }
 
+        public bool IsValidTreasureObjectByLocationId(int treasureObjectId, int currentLocation)
+        {
+            List<int> treasureObjectIds = new List<int>();
+
+            //make list of object ids in current location
+            foreach (GameObject gameObject in _gameObjects)
+            {
+                if (gameObject.LocationId == currentLocation && gameObject is TreasureObject)
+                {
+                    treasureObjectIds.Add(gameObject.Id);
+                }
+            }
+
+            //check if object id is valid
+            if (treasureObjectIds.Contains(treasureObjectId)) return true;
+            else return false;
+        }
+
         public bool IsAccessibleLocation(int locationId)
         {
             Location location = GetLocationById(locationId);
@@ -167,6 +185,18 @@ namespace TB_QuestGame
             }
 
             return citizenObjects;
+        }
+
+        public bool canPickUpObjectInLocation(int gameObjectId, int currentLocationId)
+        {
+            //stop if the id is unset
+            if (!IsValidObjectByLocationId(gameObjectId, currentLocationId)) return false;
+
+            GameObject gameObject = GetGameObjectById(gameObjectId);
+
+            if (gameObject is TreasureObject) return true;
+            else if (gameObject is CitizenObject && (gameObject as CitizenObject).CanInventory) return true;
+            else return false;
         }
         #endregion
     }

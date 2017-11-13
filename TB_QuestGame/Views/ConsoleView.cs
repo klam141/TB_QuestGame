@@ -636,9 +636,10 @@ namespace TB_QuestGame
             //check if an object in the location can be picked up
             foreach(GameObject gameObject in gameObjectsInLocation)
             {
-                if(gameObject is CitizenObject)
+                if(gameObject is CitizenObject || gameObject is TreasureObject)
                 {
-                    if ((gameObject as CitizenObject).CanInventory) canPickUpObjectInLocation = true;
+                    if (gameObject is CitizenObject && (gameObject as CitizenObject).CanInventory) canPickUpObjectInLocation = true;
+                    else if (gameObject is TreasureObject) canPickUpObjectInLocation = true;
                 }
             }
 
@@ -647,17 +648,19 @@ namespace TB_QuestGame
                 DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false, false), ActionMenu.MainMenu, "");
 
                 //check if object is in the area and if it can be put in the inventory
-                while (!(_gameMap.IsValidCitizenObjectByLocationId(gameObjectId, _gameCitizen.LocationID) && (_gameMap.GetGameObjectById(gameObjectId) as CitizenObject).CanInventory))
+                while (!_gameMap.canPickUpObjectInLocation(gameObjectId, _gameCitizen.LocationID))
                 {
                     GetInteger($"Enter the Id number of the object you want to pick up: ", 0, 0, out gameObjectId);
 
                     //display error messages
-                    if (!_gameMap.IsValidCitizenObjectByLocationId(gameObjectId, _gameCitizen.LocationID))
+                    //check if id is valid
+                    if (!(_gameMap.IsValidCitizenObjectByLocationId(gameObjectId, _gameCitizen.LocationID) || _gameMap.IsValidTreasureObjectByLocationId(gameObjectId, _gameCitizen.LocationID)))
                     {
                         ClearInputBox();
                         DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
                     }
-                    else if (!(_gameMap.GetGameObjectById(gameObjectId) as CitizenObject).CanInventory)
+                    //check if object can be put in inventory
+                    else if (!_gameMap.canPickUpObjectInLocation(gameObjectId, _gameCitizen.LocationID))
                     {
                         ClearInputBox();
                         DisplayInputErrorMessage("You can not add that item to your inventory.");
@@ -710,12 +713,12 @@ namespace TB_QuestGame
             return citizenObjectId;
         }
 
-        public void DisplayConfirmPickUp(CitizenObject o)
+        public void DisplayConfirmPickUp(GameObject o)
         {
             DisplayGamePlayScreen($"The {o.Name} has been added to your inventory", ActionMenu.MainMenu, "");
         }
 
-        public void DisplayConfirmDrop(CitizenObject o)
+        public void DisplayConfirmDrop(GameObject o)
         {
             DisplayGamePlayScreen($"The {o.Name} has been removed from your inventory", ActionMenu.MainMenu, "");
         }

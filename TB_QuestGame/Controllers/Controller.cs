@@ -143,21 +143,33 @@ namespace TB_QuestGame
                         break;
 
                     case CitizenAction.PickUpItem:
-                        int citizenObjectToPickUpId = _gameConsoleView.DisplayGetCitizenObjectToPickUp();
+                        int objectToPickUpId = _gameConsoleView.DisplayGetCitizenObjectToPickUp();
 
-                        if(citizenObjectToPickUpId != 0)
+                        if(objectToPickUpId != 0)
                         {
-                            CitizenObject citizenObject = _gameMap.GetGameObjectById(citizenObjectToPickUpId) as CitizenObject;
+                            GameObject gameobject = _gameMap.GetGameObjectById(objectToPickUpId);
 
-                            _gameCitizen.Inventory.Add(citizenObject);
-                            citizenObject.LocationId = 0;
+                            if(gameobject is CitizenObject)
+                            {
+                                _gameCitizen.Inventory.Add(gameobject as CitizenObject);
+                                gameobject.LocationId = 0;
+                            }
+                            else if(gameobject is TreasureObject)
+                            {
+                                _gameCitizen.Money += (gameobject as TreasureObject).Value;
 
-                            _gameConsoleView.DisplayConfirmPickUp(citizenObject);
+                                //remove from the game
+                                MapObjects.gameObjects.Remove(gameobject);
+                            }
+
+                            
+
+                            _gameConsoleView.DisplayConfirmPickUp(gameobject);
                         }
                         break;
 
                     case CitizenAction.PutDownItem:
-                        int citizenObjectToPutDownId = _gameConsoleView.DisplayGetCitizenObjectToPickUp();
+                        int citizenObjectToPutDownId = _gameConsoleView.DisplayGetCitizenObjectToPutDown();
 
                         if (citizenObjectToPutDownId != 0)
                         {
@@ -232,6 +244,7 @@ namespace TB_QuestGame
             _gameCitizen.Lives = 3;
             _gameCitizen.Health = 100;
             _gameCitizen.Exp = 0;
+            _gameCitizen.Money = 0;
             _gameCitizen.IsStunned = false;
         }
 

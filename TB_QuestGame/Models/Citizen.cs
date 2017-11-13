@@ -25,7 +25,7 @@ namespace TB_QuestGame
         #region FIELDS
         Statuses _status;
         string _homePlanet;
-        int _health, _lives, _exp;
+        int _health, _lives, _exp, _money;
         bool _isStunned;
 
         private List<int> _locationsVisited;
@@ -62,6 +62,11 @@ namespace TB_QuestGame
         {
             get { return _exp; }
             set { _exp = value; }
+        }
+
+        public int Money {
+            get { return _money; }
+            set { _money = value; }
         }
 
         public bool IsStunned
