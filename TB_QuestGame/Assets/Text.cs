@@ -19,9 +19,8 @@ namespace TB_QuestGame
         public static string MissionIntro()
         {
             string messageBoxText =
-            "You are a citizen aboard the space station Nimbus 12.\n" +
-            "You have been living on the Nimbus ever since you moved " + 
-            "from the Tiny Dog Planet 3 years ago. \n" +
+            "You are a citizen of the space station The Nimbus 12.\n" +
+            "You have been living on the Nimbus for 3 years now. \n" +
             "You are currently sleeping in your quarters near plaza 3 \n" +
             " \n" +
             "You may press escape to exit the game at any time. \n"
@@ -199,8 +198,8 @@ namespace TB_QuestGame
             
             statusBoxText.Add($"Lives: {gameCitizen.Lives}\n");
             statusBoxText.Add($"Health: {gameCitizen.Health}\n");
-            statusBoxText.Add($"Experience Points: {gameCitizen.Exp}\n");
             statusBoxText.Add($"Money: {gameCitizen.Money}\n");
+            statusBoxText.Add($"Experience Points: {gameCitizen.Exp}\n");
 
             return statusBoxText;
         }
@@ -243,7 +242,7 @@ namespace TB_QuestGame
         public static string Travel(Citizen gameCitizen, Location currentLocation, List<Location> locations)
         {
             string messageBoxText =
-                $"{gameCitizen.Name}, Aion Base will need to know the name of the new location.\n" +
+                $"Where do you want to go?\n" +
                 " \n" +
                 "Enter the ID number of your desired location from the table below.\n" +
                 " \n" +
@@ -290,6 +289,7 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
+        //TODO: Use actual events
         public static string EventText(Location location)
         {
             string messageBoxText = location.EventDescription;

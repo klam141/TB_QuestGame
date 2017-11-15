@@ -13,9 +13,9 @@ namespace TB_QuestGame
             new TreasureObject
             {
                 Id = 1,
-                Name = "Bag of Gold",
+                Name = "Bag of Money",
                 LocationId = 2,
-                Description = "A small leather pouch filled with 9 gold coins.",
+                Description = "A small pouch filled with some coins.",
                 Value = 45,
                 CanInventory = true,
                 IsVisible = true
@@ -24,10 +24,10 @@ namespace TB_QuestGame
             new TreasureObject
             {
                 Id = 2,
-                Name = "Ruby of Saron",
+                Name = "Ruby",
                 LocationId = 3,
-                Description = "A bright red jewel, roughly the size of a robin's egg.",
-                Value = 45,
+                Description = "A bright red jewel, roughly the size of a robin's egg... \n Why is this on a space station?",
+                Value = 100,
                 CanInventory = true,
                 IsVisible = true
             },
@@ -35,9 +35,9 @@ namespace TB_QuestGame
             new CitizenObject
             {
                 Id = 3,
-                Name = "Rotogenic Medicine",
+                Name = "Medicine",
                 LocationId = 3,
-                Description = "A wooden box containing a small vial filled with a blue liquid.",
+                Description = "A small box containing a vial filled with a blue liquid.",
                 Type = ObjectType.Medicine,
                 CanInventory = false,
                 IsConsumable = true,
@@ -47,14 +47,10 @@ namespace TB_QuestGame
             new CitizenObject
             {
                 Id = 4,
-                Name = "Norlan Document ND-3075",
+                Name = "Contraband",
                 LocationId = 3,
-                Description =
-                    "Memo: Origin Errata" + "/n" +
-                    "Universal Date: 378598" + "/n" +
-                    "/n" +
-                    "It appears a potential origin for the technology is based on Plenatia 5 in the Star Reach Galaxy.",
-                Type = ObjectType.Information,
+                Description = "Illegal items to be sold on the black market.",
+                Type = ObjectType.Contraband,
                 CanInventory = true,
                 IsConsumable = false,
                 IsVisible = true
@@ -63,10 +59,10 @@ namespace TB_QuestGame
             new CitizenObject
             {
                 Id = 8,
-                Name = "Aion Tracker",
+                Name = "ID Card",
                 LocationId = 0,
                 Description =
-                    "Standard issue device worn around wrist that allows for tracking and messaging.",
+                    "Your ID card. Everyone on the station has one.",
                 Type = ObjectType.Information,
                 CanInventory = true,
                 IsConsumable = false,
@@ -76,10 +72,10 @@ namespace TB_QuestGame
             new CitizenObject
             {
                 Id = 9,
-                Name = "RatPak 47",
+                Name = "Sandwich",
                 LocationId = 0,
                 Description =
-                    "Standard issue ration package contain nutrients for 72 hours.",
+                    "A delicious sandwich.",
                 Type = ObjectType.Food,
                 CanInventory = true,
                 IsConsumable = true,

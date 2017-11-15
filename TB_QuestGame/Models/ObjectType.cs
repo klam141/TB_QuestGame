@@ -11,7 +11,7 @@ namespace TB_QuestGame
         Food,
         Medicine,
         Tool,
-        Currency,
-        Information
+        Information,
+        Contraband
     }
 }
