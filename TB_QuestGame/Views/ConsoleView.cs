@@ -120,6 +120,8 @@ namespace TB_QuestGame
         /// <returns>string value</returns>2
         public string GetString()
         {
+
+
             return Console.ReadLine();
         }
 
