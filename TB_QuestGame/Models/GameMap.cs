@@ -11,6 +11,7 @@ namespace TB_QuestGame
         #region FIELDS
         private List<Location> _locations;
         private List<GameObject> _gameObjects;
+        private List<Npc> _npcs;
         #endregion
 
 
@@ -23,6 +24,11 @@ namespace TB_QuestGame
         public List<GameObject> GameObjects
         {
             get { return _gameObjects; }
+        }
+
+        public List<Npc> Npcs
+        {
+            get { return _npcs; }
         }
         #endregion
 
@@ -40,6 +46,7 @@ namespace TB_QuestGame
         {
             _locations = MapObjects.Locations;
             _gameObjects = MapObjects.gameObjects;
+            _npcs = MapObjects.Npcs;
         }
 
         public bool IsValidLocation(int currentId, int locationId)
@@ -64,8 +71,7 @@ namespace TB_QuestGame
                 if (gameObject.LocationId == currentLocationId) gameObjectIds.Add(gameObject.Id);
             }
 
-            if (gameObjectIds.Contains(gameObjectId)) return true;
-            else return false;
+            return gameObjectIds.Contains(gameObjectId);
         }
 
         public bool IsValidCitizenObjectByLocationId(int citizenObjectId, int currentLocation)
@@ -82,8 +88,7 @@ namespace TB_QuestGame
             }
 
             //check if object id is valid
-            if (citizenObjectIds.Contains(citizenObjectId)) return true;
-            else return false;
+            return citizenObjectIds.Contains(citizenObjectId);
         }
 
         public bool IsValidTreasureObjectByLocationId(int treasureObjectId, int currentLocation)
@@ -100,8 +105,22 @@ namespace TB_QuestGame
             }
 
             //check if object id is valid
-            if (treasureObjectIds.Contains(treasureObjectId)) return true;
-            else return false;
+            return treasureObjectIds.Contains(treasureObjectId);
+        }
+
+        public bool IsValidNpcByLocationId(int npcId, int currentLocation)
+        {
+            List<int> npcIds = new List<int>();
+
+            foreach(Npc npc in _npcs)
+            {
+                if (npc.LocationId == currentLocation)
+                {
+                    npcIds.Add(npc.Id);
+                }
+            }
+
+            return npcIds.Contains(npcId);
         }
 
         public bool IsAccessibleLocation(int locationId)
@@ -159,6 +178,24 @@ namespace TB_QuestGame
             return gameObjectToReturn;
         }
 
+        public Npc GetNpcById(int id)
+        {
+            Npc npcToReturn = null;
+
+            foreach(Npc npc in _npcs)
+            {
+                if (npc.Id == id) npcToReturn = npc;
+            }
+
+            if(npcToReturn == null)
+            {
+                string feedbackMessage = $"The Npc ID {id} does not exist";
+                throw new ArgumentException(id.ToString(), feedbackMessage);
+            }
+
+            return npcToReturn;
+        }
+
         public List<GameObject> GetGameObjectsByLocationId(int locationId)
         {
             List<GameObject> gameObjects = new List<GameObject>();
@@ -185,6 +222,21 @@ namespace TB_QuestGame
             }
 
             return citizenObjects;
+        }
+
+        public List<Npc> GetNpcsByLocationId(int locationId)
+        {
+            List<Npc> npcs = new List<Npc>();
+
+            foreach(Npc npc in _npcs)
+            {
+                if(npc.LocationId == locationId)
+                {
+                    npcs.Add(npc);
+                }
+            }
+
+            return npcs;
         }
 
         public bool canPickUpObjectInLocation(int gameObjectId, int currentLocationId)

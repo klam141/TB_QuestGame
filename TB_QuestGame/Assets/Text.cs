@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TB_QuestGame
 {
@@ -137,7 +135,7 @@ namespace TB_QuestGame
 
         public static string GameObjectTable(IEnumerable<GameObject> gameObjects, bool showType, bool showLocationId)
         {
-            string messageboxText = "";
+            string messageBoxText = "";
 
             string tableLine1 = "ID".PadRight(10) + "Name".PadRight(30);
             string tableLine2 = "---".PadRight(10) + "----------------------".PadRight(30);
@@ -150,7 +148,7 @@ namespace TB_QuestGame
 
             if(showLocationId)
             {
-                tableLine1 += "LocationID".PadRight(10);
+                tableLine1 += "LocationId".PadRight(10);
                 tableLine2 += "----------------------".PadRight(10);
             }
 
@@ -163,19 +161,54 @@ namespace TB_QuestGame
                 objectList +=
                     $"{gameObject.Id}".PadRight(10) +
                     $"{gameObject.Name}".PadRight(30);
+                
+                if (showLocationId) objectList += $"{gameObject.LocationId}".PadRight(10);
 
-                    if (showLocationId) objectList += $"{gameObject.LocationId}".PadRight(10);
-
-                    objectList += Environment.NewLine;
+                objectList += Environment.NewLine;
             }
 
-            if (objectList == null) return messageboxText;
-            else
+            if (objectList != null)
             {
-                messageboxText = tableLine1 + tableLine2 + objectList;
-
-                return messageboxText;
+                messageBoxText = tableLine1 + tableLine2 + objectList;
             }
+
+            return messageBoxText;
+        }
+
+        public static string NpcTable(IEnumerable<Npc> npcs, bool showLocationId)
+        {
+            string messageBoxText = "";
+
+            string tableLine1 = "ID".PadRight(10) + "Name".PadRight(30);
+            string tableLine2 = "---".PadRight(10) + "----------------------".PadRight(30);
+
+            if (showLocationId)
+            {
+                tableLine1 += "LocationId".PadRight(10);
+                tableLine2 += "----------------------".PadRight(10);
+            }
+
+            tableLine1 += "\n";
+            tableLine2 += "\n";
+
+            string npcList = null;
+            foreach (Npc npc in npcs)
+            {
+                npcList +=
+                    $"{npc.Id}".PadRight(10) +
+                    $"{npc.Name}".PadRight(30);
+
+                if (showLocationId) npcList += $"{npc.LocationId}".PadRight(10);
+
+                npcList += Environment.NewLine;
+            }
+
+            if (npcList != null)
+            {
+                messageBoxText = tableLine1 + tableLine2 + npcList;
+            }
+
+            return messageBoxText;
         }
 
         public static string CitizenInfo(Citizen gameCitizen)
@@ -253,7 +286,7 @@ namespace TB_QuestGame
             string locationList = null;
             foreach (Location location in locations)
             {
-                if (location.LocationID != gameCitizen.LocationID && currentLocation.CanAccess.Contains(location.LocationID))
+                if (location.LocationID != gameCitizen.LocationId && currentLocation.CanAccess.Contains(location.LocationID))
                 {
                     locationList +=
                         $"{location.LocationID}".PadRight(10) +
@@ -302,6 +335,15 @@ namespace TB_QuestGame
             string messageBoxText = "Game Objects: \n \n";
 
             messageBoxText += GameObjectTable(gameObjects, showType, showLocationId);
+
+            return messageBoxText;
+        }
+
+        public static string ListNpcs(IEnumerable<Npc> npcs, bool showLocationId)
+        {
+            string messageBoxText = "Npcs: \n \n";
+
+            messageBoxText += NpcTable(npcs, showLocationId);
 
             return messageBoxText;
         }

@@ -98,7 +98,7 @@ namespace TB_QuestGame
             // prepare game play screen
             //
             _currentMenu = ActionMenu.MainMenu;
-            _currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
+            _currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationId);
             _gameConsoleView.DisplayGamePlayScreen(Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
 
             //
@@ -176,7 +176,7 @@ namespace TB_QuestGame
                             CitizenObject citizenObject = _gameMap.GetGameObjectById(citizenObjectToPutDownId) as CitizenObject;
 
                             _gameCitizen.Inventory.Remove(citizenObject);
-                            citizenObject.LocationId = _gameCitizen.LocationID;
+                            citizenObject.LocationId = _gameCitizen.LocationId;
 
                             _gameConsoleView.DisplayConfirmDrop(citizenObject);
                         }
@@ -204,6 +204,10 @@ namespace TB_QuestGame
 
                     case CitizenAction.ListItems:
                         _gameConsoleView.DisplayListOfGameObjects(_gameMap.GameObjects);
+                        break;
+
+                    case CitizenAction.ListNpcs:
+                        _gameConsoleView.DisplayListOfNpcs(_gameMap.Npcs);
                         break;
 
                     case CitizenAction.ReturnToMainMenu:
@@ -236,7 +240,7 @@ namespace TB_QuestGame
 
             _gameCitizen.Name = Citizen.Name;
             _gameCitizen.Age = Citizen.Age;
-            _gameCitizen.LocationID = 1;
+            _gameCitizen.LocationId = 1;
             _gameCitizen.Race = Citizen.Race;
             _gameCitizen.HomePlanet = Citizen.HomePlanet;
 
@@ -286,7 +290,7 @@ namespace TB_QuestGame
 
         private void UpdateLocation(int newLocation)
         {
-            _gameCitizen.LocationID = newLocation;
+            _gameCitizen.LocationId = newLocation;
             _currentLocation = _gameMap.GetLocationById(newLocation);
 
             //show new location's info

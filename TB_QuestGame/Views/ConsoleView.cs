@@ -64,9 +64,9 @@ namespace TB_QuestGame
         /// <param name="inputBoxPrompt">input box text</param>
         public void DisplayGamePlayScreen(string messageBoxText, Menu menu, string inputBoxPrompt)
         {
-            string currentLocation;// = _gameMap.GetLocationById(_gameCitizen.LocationID).CommonName;
-            if (_gameCitizen.LocationID == 0) currentLocation = "";
-            else currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID).CommonName;
+            string currentLocation;// = _gameMap.GetLocationById(_gameCitizen.LocationId).CommonName;
+            if (_gameCitizen.LocationId == 0) currentLocation = "";
+            else currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationId).CommonName;
 
             //
             // reset screen to default window colors
@@ -508,7 +508,7 @@ namespace TB_QuestGame
 
         public void DisplayEventText()
         {
-            Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
+            Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationId);
             DisplayGamePlayScreen(Text.EventText(currentLocation), ActionMenu.None, "");
 
             GetContinueKey();
@@ -524,16 +524,16 @@ namespace TB_QuestGame
 
         public void DisplayLookAround()
         {
-            Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
+            Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationId);
 
-            List<GameObject> gameObjectsInCurrentLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationID);
+            List<GameObject> gameObjectsInCurrentLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationId);
 
             DisplayGamePlayScreen(Text.LookAround(currentLocation, gameObjectsInCurrentLocation), ActionMenu.MainMenu, "");
         }
 
         public void DisplayLocationInfo()
         {
-            Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationID);
+            Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationId);
             DisplayGamePlayScreen(Text.CurrentLocationInfo(currentLocation), ActionMenu.MainMenu, "");
         }
 
@@ -547,7 +547,7 @@ namespace TB_QuestGame
             int locationId = 0;
             bool validLocation = false;
 
-            DisplayGamePlayScreen(Text.Travel(_gameCitizen, _gameMap.GetLocationById(_gameCitizen.LocationID), _gameMap.Locations), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.Travel(_gameCitizen, _gameMap.GetLocationById(_gameCitizen.LocationId), _gameMap.Locations), ActionMenu.MainMenu, "");
 
             while(!validLocation)
             {
@@ -555,7 +555,7 @@ namespace TB_QuestGame
                 GetInteger($"Enter your new location {_gameCitizen.Name}: ", 1, _gameMap.GetMaxLocationId(), out locationId);
 
                 //validate int
-                if(_gameMap.IsValidLocation(_gameCitizen.LocationID, locationId))
+                if(_gameMap.IsValidLocation(_gameCitizen.LocationId, locationId))
                 {
                     if(_gameMap.IsAccessibleLocation(locationId))
                     {
@@ -597,17 +597,17 @@ namespace TB_QuestGame
             int gameObjectId = 0;
 
 
-            List<GameObject> gameObjectsInLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationID);
+            List<GameObject> gameObjectsInLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationId);
 
             if(gameObjectsInLocation.Count > 0)
             {
                 DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false, false), ActionMenu.MainMenu, "");
 
-                while(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationID)))
+                while(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationId)))
                 {
                     GetInteger($"Enter the Id number of the object you want to look at: ", 0, 0, out gameObjectId);
 
-                    if(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationID)))
+                    if(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationId)))
                     {
                         ClearInputBox();
                         DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
@@ -633,7 +633,7 @@ namespace TB_QuestGame
             int gameObjectId = 0;
             bool canPickUpObjectInLocation = false;
             
-            List<GameObject> gameObjectsInLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationID);
+            List<GameObject> gameObjectsInLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationId);
 
             //check if an object in the location can be picked up
             foreach(GameObject gameObject in gameObjectsInLocation)
@@ -650,19 +650,19 @@ namespace TB_QuestGame
                 DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false, false), ActionMenu.MainMenu, "");
 
                 //check if object is in the area and if it can be put in the inventory
-                while (!_gameMap.canPickUpObjectInLocation(gameObjectId, _gameCitizen.LocationID))
+                while (!_gameMap.canPickUpObjectInLocation(gameObjectId, _gameCitizen.LocationId))
                 {
                     GetInteger($"Enter the Id number of the object you want to pick up: ", 0, 0, out gameObjectId);
 
                     //display error messages
                     //check if id is valid
-                    if (!(_gameMap.IsValidCitizenObjectByLocationId(gameObjectId, _gameCitizen.LocationID) || _gameMap.IsValidTreasureObjectByLocationId(gameObjectId, _gameCitizen.LocationID)))
+                    if (!(_gameMap.IsValidCitizenObjectByLocationId(gameObjectId, _gameCitizen.LocationId) || _gameMap.IsValidTreasureObjectByLocationId(gameObjectId, _gameCitizen.LocationId)))
                     {
                         ClearInputBox();
                         DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
                     }
                     //check if object can be put in inventory
-                    else if (!_gameMap.canPickUpObjectInLocation(gameObjectId, _gameCitizen.LocationID))
+                    else if (!_gameMap.canPickUpObjectInLocation(gameObjectId, _gameCitizen.LocationId))
                     {
                         ClearInputBox();
                         DisplayInputErrorMessage("You can not add that item to your inventory.");
@@ -728,6 +728,11 @@ namespace TB_QuestGame
         public void DisplayInventory()
         {
             DisplayGamePlayScreen(Text.CurrentInventory(_gameCitizen.Inventory), ActionMenu.MainMenu, "");
+        }
+
+        public void DisplayListOfNpcs(IEnumerable<Npc> npcs)
+        {
+            DisplayGamePlayScreen(Text.ListNpcs(npcs, true), ActionMenu.AdminMenu, "");
         }
 
 

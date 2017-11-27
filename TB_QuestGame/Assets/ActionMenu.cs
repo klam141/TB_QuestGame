@@ -69,6 +69,7 @@ namespace TB_QuestGame
             {
                 { '1', CitizenAction.ListDestinations },
                 { '2', CitizenAction.ListItems},
+                { '3', CitizenAction.ListNpcs },
                 { '0', CitizenAction.ReturnToMainMenu}
             }
         };

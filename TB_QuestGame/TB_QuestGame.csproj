@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ActionMenu.cs" />
+    <Compile Include="Assets\MapNpcs.cs" />
     <Compile Include="Assets\MapObjects.cs" />
     <Compile Include="Assets\Text.cs" />
     <Compile Include="ConsoleUtilities\ConsoleLayout.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\CitizenObject.cs" />
+    <Compile Include="Models\Civilian.cs" />
     <Compile Include="Models\Enum\CitizenAction.cs" />
     <Compile Include="Models\Enum\MapEvents.cs" />
     <Compile Include="Models\Enum\ObjectType.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Models\GameMap.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Citizen.cs" />
+    <Compile Include="Models\Npc.cs" />
     <Compile Include="Models\TreasureObject.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />

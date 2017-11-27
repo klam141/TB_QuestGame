@@ -12,24 +12,27 @@ namespace TB_QuestGame
     public enum CitizenAction
     {
         None,
+
         MissionSetup,
+
+        //main menu
         LookAround,
         LookAt,
         PickUpItem,
-        PickUpTreasure,
         PutDownItem,
-        PutDownTreasure,
         Inventory,
         Travel,
         CitizenInfo,
         CitizenInventory,
-        CitizenTreasure,
         CitizenLocationsVisited,
+
+        //admin menu
+        AdminMenu,
         ListDestinations,
         ListItems,
-        ListTreasures,
-        AdminMenu,
+        ListNpcs,
         ReturnToMainMenu,
+
         Exit
     }
 }
