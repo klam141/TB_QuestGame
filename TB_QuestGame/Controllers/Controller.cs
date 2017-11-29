@@ -131,9 +131,14 @@ namespace TB_QuestGame
                         break;
 
                     case CitizenAction.LookAt://look at an item and act on it
-                        int thingToLookAt = _gameConsoleView.DisplayGetGameObjectsToLookAt();
+                        int mapObjectToLookAt = _gameConsoleView.DisplayGetMapObjectsToLookAt();
 
-                        
+                        if(gameObjectToLookAtId != 0)
+                        {
+                            GameObject gameObject = _gameMap.GetGameObjectById(gameObjectToLookAtId);
+
+                            _gameConsoleView.DisplayGameObjectInfo(gameObject);
+                        }
 
                         break;
 
