@@ -47,18 +47,39 @@ namespace TB_QuestGame
             MenuName = "MainMenu",
             MenuTitle = "Main Menu",
             MenuChoices = new Dictionary<char, CitizenAction>()
-                {
-                    { '1', CitizenAction.CitizenInfo },
-                    { '2', CitizenAction.LookAround},
-                    { '3', CitizenAction.LookAt},
-                    { '4', CitizenAction.PickUpItem},
-                    { '5', CitizenAction.PutDownItem},
-                    { '6', CitizenAction.Inventory},
-                    { '7', CitizenAction.Travel},
-                    { '8', CitizenAction.CitizenLocationsVisited},
-                    { '9', CitizenAction.AdminMenu},
-                    { '0', CitizenAction.Exit }
-        }
+            {
+                { '1', CitizenAction.CitizenInfo },
+                { '2', CitizenAction.LookAround},
+                { '3', CitizenAction.LookAt},
+                { '6', CitizenAction.Inventory},
+                { '7', CitizenAction.Travel},
+                { '8', CitizenAction.AdminMenu},
+                { '0', CitizenAction.Exit }
+            }
+        };
+
+        public static Menu ObjectMenu = new Menu()
+        {
+            MenuName = "ObjectMenu",
+            MenuTitle = "Object Menu",
+            MenuChoices = new Dictionary<char, CitizenAction>()
+            {
+                { '1', CitizenAction.PickUpItem},
+                { '2', CitizenAction.PutDownItem},
+                { '0', CitizenAction.ReturnToMainMenu}
+            }
+        };
+
+        public static Menu NpcMenu = new Menu()
+        {
+            MenuName = "NpcMenu",
+            MenuTitle = "NPC Menu",
+            MenuChoices = new Dictionary<char, CitizenAction>()
+            {
+                { '1', CitizenAction.Talk},
+                { '2', CitizenAction.Trade},
+                { '0', CitizenAction.ReturnToMainMenu}
+            }
         };
 
         public static Menu AdminMenu = new Menu()

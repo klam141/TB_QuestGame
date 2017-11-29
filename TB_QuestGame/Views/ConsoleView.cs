@@ -518,8 +518,18 @@ namespace TB_QuestGame
 
         public void DisplayCitizenInfo()
         {
-            DisplayGamePlayScreen(Text.CitizenInfo(_gameCitizen), ActionMenu.MainMenu, "");
-            Console.Write(_gameCitizen.HomePlanet);
+            List<Location> visitedLocations = new List<Location>();
+            foreach (int locationId in _gameCitizen.LocationsVisited)
+            {
+                visitedLocations.Add(_gameMap.GetLocationById(locationId));
+            }
+
+            string messageBoxText =
+                Text.CitizenInfo(_gameCitizen) +
+                Environment.NewLine +
+                Text.VisitedLocations(visitedLocations);
+
+            DisplayGamePlayScreen(messageBoxText, ActionMenu.MainMenu, "");
         }
 
         public void DisplayLookAround()
@@ -527,8 +537,9 @@ namespace TB_QuestGame
             Location currentLocation = _gameMap.GetLocationById(_gameCitizen.LocationId);
 
             List<GameObject> gameObjectsInCurrentLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationId);
+            List<Npc> npcsInCurrentLocation = _gameMap.GetNpcsByLocationId(_gameCitizen.LocationId);
 
-            DisplayGamePlayScreen(Text.LookAround(currentLocation, gameObjectsInCurrentLocation), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.LookAround(currentLocation, gameObjectsInCurrentLocation, npcsInCurrentLocation), ActionMenu.MainMenu, "");
         }
 
         public void DisplayLocationInfo()
@@ -590,6 +601,15 @@ namespace TB_QuestGame
         public void DisplayListOfGameObjects(IEnumerable<GameObject> gameObjects)
         {
             DisplayGamePlayScreen(Text.ListGameObjects(gameObjects, false, true), ActionMenu.AdminMenu, "");
+        }
+
+        public int DisplayGetMapObjectsToLookAt()
+        {
+            int mapObjectId = 0;
+
+            Dictionary<int, object> mapObjects = new Dictionary<int, object>();
+
+            return mapObjectId;
         }
 
         public int DisplayGetGameObjectsToLookAt()

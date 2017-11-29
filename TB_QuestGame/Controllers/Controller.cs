@@ -130,15 +130,10 @@ namespace TB_QuestGame
                         TriggerEvents();
                         break;
 
-                    case CitizenAction.LookAt:
-                        int gameObjectToLookAtId = _gameConsoleView.DisplayGetGameObjectsToLookAt();
+                    case CitizenAction.LookAt://look at an item and act on it
+                        int thingToLookAt = _gameConsoleView.DisplayGetGameObjectsToLookAt();
 
-                        if(gameObjectToLookAtId != 0)
-                        {
-                            GameObject gameObject = _gameMap.GetGameObjectById(gameObjectToLookAtId);
-
-                            _gameConsoleView.DisplayGameObjectInfo(gameObject);
-                        }
+                        
 
                         break;
 
@@ -188,10 +183,6 @@ namespace TB_QuestGame
 
                     case CitizenAction.Travel:
                         UpdateLocation(_gameConsoleView.DisplayGetNextLocation());
-                        break;
-
-                    case CitizenAction.CitizenLocationsVisited:
-                        _gameConsoleView.DisplayLocationsVisited();
                         break;
 
                     case CitizenAction.AdminMenu:

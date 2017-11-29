@@ -196,6 +196,30 @@ namespace TB_QuestGame
             return npcToReturn;
         }
 
+        public Dictionary<int, object> GetMapObjectyByLocationId(int locationId)
+        {
+            Dictionary<int, object> mapObjects = new Dictionary<int, object>();
+
+            //get gameobjects and npcs in current location
+            List<GameObject> gameObjects = GetGameObjectsByLocationId(locationId);
+            List<Npc> npcs = GetNpcsByLocationId(locationId);
+
+            //add gameobjects and npcs to list
+            var i = 1;
+            foreach(GameObject gameObject in gameObjects)
+            {
+                mapObjects.Add(i, gameObject);
+                i++;
+            }
+            foreach(Npc npc in npcs)
+            {
+                mapObjects.Add(i, npc);
+                i++;
+            }
+
+            return mapObjects;
+        }
+
         public List<GameObject> GetGameObjectsByLocationId(int locationId)
         {
             List<GameObject> gameObjects = new List<GameObject>();

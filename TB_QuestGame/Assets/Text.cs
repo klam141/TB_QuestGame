@@ -169,7 +169,7 @@ namespace TB_QuestGame
 
             if (objectList != null)
             {
-                messageBoxText = tableLine1 + tableLine2 + objectList;
+                messageBoxText = "Objects \n" + tableLine1 + tableLine2 + objectList;
             }
 
             return messageBoxText;
@@ -205,7 +205,7 @@ namespace TB_QuestGame
 
             if (npcList != null)
             {
-                messageBoxText = tableLine1 + tableLine2 + npcList;
+                messageBoxText = "NPCs \n" + tableLine1 + tableLine2 + npcList;
             }
 
             return messageBoxText;
@@ -237,14 +237,17 @@ namespace TB_QuestGame
             return statusBoxText;
         }
 
-        public static string LookAround(Location location, IEnumerable<GameObject> gameObjects)
+        public static string LookAround(Location location, IEnumerable<GameObject> gameObjects, IEnumerable<Npc> npcs)
         {
             string messageBoxText = 
                 $"Current Location: {location.CommonName}\n" +
                 " \n" +
                 location.GeneralContents +
                 Environment.NewLine + Environment.NewLine +
-                GameObjectTable(gameObjects, false, false);
+
+                GameObjectTable(gameObjects, false, false) +
+                Environment.NewLine + Environment.NewLine +
+                NpcTable(npcs, false);
 
             return messageBoxText;
         }
