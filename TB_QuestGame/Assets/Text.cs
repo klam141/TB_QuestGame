@@ -335,7 +335,7 @@ namespace TB_QuestGame
 
         public static string ListGameObjects(IEnumerable<GameObject> gameObjects, bool showType, bool showLocationId)
         {
-            string messageBoxText = "Game Objects: \n \n";
+            string messageBoxText = "Objects: \n \n";
 
             messageBoxText += GameObjectTable(gameObjects, showType, showLocationId);
 
@@ -349,6 +349,35 @@ namespace TB_QuestGame
             messageBoxText += NpcTable(npcs, showLocationId);
 
             return messageBoxText;
+        }
+
+        public static string ListMapObjects(Dictionary<int, Object> mapObjects)
+        {
+            string messageBoxText = "";
+
+            messageBoxText += 
+                "ID".PadRight(10) + "Name".PadRight(30) + " \n" +
+                "---".PadRight(10) + "----------------------".PadRight(30) + " \n";
+
+            string mapObjectList = null;
+            foreach (KeyValuePair<int, object> mapObject in mapObjects)
+            {
+                mapObjectList += $"{mapObject.Key}".PadRight(10);
+
+                //cast objects in dictionary so they have a name
+                if(mapObject.Value is GameObject)
+                {
+                    mapObjectList += $"{(mapObject.Value as GameObject).Name}".PadRight(30);
+                }
+                if(mapObject.Value is Npc)
+                {
+                    mapObjectList += $"{(mapObject.Value as Npc).Name}".PadRight(30);
+                }
+
+                mapObjectList += Environment.NewLine;
+            }
+
+            return messageBoxText += mapObjectList;
         }
 
         public static string LookAt(GameObject gameObject)

@@ -17,6 +17,7 @@ namespace TB_QuestGame
         private Citizen _gameCitizen;
         private GameMap _gameMap;
         private Menu _currentMenu;
+        private dynamic _currentObject;
         private bool _playingGame;
         private Location _currentLocation;
 
@@ -131,13 +132,29 @@ namespace TB_QuestGame
                         break;
 
                     case CitizenAction.LookAt://look at an item and act on it
-                        int mapObjectToLookAt = _gameConsoleView.DisplayGetMapObjectsToLookAt();
+                        Dictionary<int, object> mapObjectsInLocation = _gameMap.GetMapObjectyByLocationId(_gameCitizen.LocationId);
 
-                        if(gameObjectToLookAtId != 0)
+                        int mapObjectToLookAt = _gameConsoleView.DisplayGetMapObjectsToLookAt(mapObjectsInLocation);
+
+                        if(mapObjectToLookAt != 0)
                         {
-                            GameObject gameObject = _gameMap.GetGameObjectById(gameObjectToLookAtId);
+                            _currentObject = mapObjectsInLocation[mapObjectToLookAt];
 
-                            _gameConsoleView.DisplayGameObjectInfo(gameObject);
+                            if(_currentObject is GameObject)
+                            {
+                                _currentMenu = ActionMenu.ObjectMenu;
+                            }
+                            else if(_currentObject is Npc)
+                            {
+                                _currentObject = ActionMenu.NpcMenu;
+                            }
+                            else
+                            {
+                                string feedbackMessage = $"The object {_currentObject.name} is a {_currentObject.GetType()}";
+                                throw new ArgumentException(_currentObject.ToString(), feedbackMessage);
+                            }
+
+                            _gameConsoleView.DisplayObjectInfo(_currentObject);
                         }
 
                         break;

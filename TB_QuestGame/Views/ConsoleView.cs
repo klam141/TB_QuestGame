@@ -603,11 +603,30 @@ namespace TB_QuestGame
             DisplayGamePlayScreen(Text.ListGameObjects(gameObjects, false, true), ActionMenu.AdminMenu, "");
         }
 
-        public int DisplayGetMapObjectsToLookAt()
+        public int DisplayGetMapObjectsToLookAt(Dictionary<int, object> mapObjectsInLocation)
         {
             int mapObjectId = 0;
 
-            Dictionary<int, object> mapObjects = new Dictionary<int, object>();
+            if(mapObjectsInLocation.Count > 0)
+            {
+                DisplayGamePlayScreen(Text.ListMapObjects(mapObjectsInLocation), ActionMenu.MainMenu, "");
+
+                while(!mapObjectsInLocation.ContainsKey(mapObjectId))
+                {
+                    GetInteger($"Enter the Id number of the thing you want to look at: ", 0, 0, out mapObjectId);
+
+                    if (!mapObjectsInLocation.ContainsKey(mapObjectId))
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                ClearInputBox();
+                DisplayGamePlayScreen("There is nothing to look at here.", ActionMenu.MainMenu, "");
+            }
 
             return mapObjectId;
         }

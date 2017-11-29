@@ -52,6 +52,7 @@ namespace TB_QuestGame
                 { '2', CitizenAction.LookAround},
                 { '3', CitizenAction.LookAt},
                 { '6', CitizenAction.Inventory},
+                { '5', CitizenAction.PutDownItem},
                 { '7', CitizenAction.Travel},
                 { '8', CitizenAction.AdminMenu},
                 { '0', CitizenAction.Exit }
@@ -65,7 +66,6 @@ namespace TB_QuestGame
             MenuChoices = new Dictionary<char, CitizenAction>()
             {
                 { '1', CitizenAction.PickUpItem},
-                { '2', CitizenAction.PutDownItem},
                 { '0', CitizenAction.ReturnToMainMenu}
             }
         };
