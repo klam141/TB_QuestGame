@@ -140,7 +140,7 @@ namespace TB_QuestGame
                         break;
 
                     case CitizenAction.Talk:
-
+                        TalkTo();
                         break;
 
                     case CitizenAction.Trade:
@@ -352,6 +352,14 @@ namespace TB_QuestGame
                 _gameConsoleView.DisplayObjectInfo(_currentObject);
             }
         }
+
+        private void TalkTo()
+        {
+            Npc npc = _currentObject;
+
+            _gameConsoleView.DisplayTalkTo(npc);
+        }
+            
 
         private void PickUpObject()
         {

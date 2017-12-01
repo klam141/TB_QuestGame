@@ -351,6 +351,15 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
+        public static string TalkTo(Civilian civilian)
+        {
+            string messageBoxText = civilian.Name + ":" + Environment.NewLine;
+
+            messageBoxText += civilian.Speak();
+
+            return messageBoxText;
+        }
+
         public static string ListMapObjects(Dictionary<int, Object> mapObjects)
         {
             string messageBoxText = "";

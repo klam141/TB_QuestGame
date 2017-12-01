@@ -781,6 +781,19 @@ namespace TB_QuestGame
             DisplayGamePlayScreen(Text.ListNpcs(npcs, true), ActionMenu.AdminMenu, "");
         }
 
+        public void DisplayTalkTo(Npc npc)
+        {
+            if(npc is Civilian)
+            {
+                DisplayGamePlayScreen(Text.TalkTo(npc as Civilian), ActionMenu.NpcMenu, "");
+            }
+            else
+            {
+                DisplayGamePlayScreen("They don't have anything to say.", ActionMenu.NpcMenu, "");
+            }
+
+        }
+
 
 
         public void DisplayExit() {

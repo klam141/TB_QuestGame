@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TB_QuestGame
 {
-    class Civilian : Npc, ISpeak
+    public class Civilian : Npc, ISpeak
     {
         public override int Id { get; set; }
 
@@ -34,7 +34,7 @@ namespace TB_QuestGame
 
             //goes through the messages until you reach the last message
             //repeats the last message after that
-            if(CurrentMessageNum < Messages.Count()) CurrentMessageNum++;
+            if(CurrentMessageNum < (Messages.Count() - 1)) CurrentMessageNum++;
 
             return message;
         }

@@ -51,9 +51,9 @@ namespace TB_QuestGame
                 { '1', CitizenAction.CitizenInfo },
                 { '2', CitizenAction.LookAround },
                 { '3', CitizenAction.Interact },
-                { '6', CitizenAction.Inventory },
-                { '7', CitizenAction.Travel },
-                { '8', CitizenAction.AdminMenu },
+                { '4', CitizenAction.Inventory },
+                { '5', CitizenAction.Travel },
+                { '6', CitizenAction.AdminMenu },
                 { '0', CitizenAction.Exit }
             }
         };
@@ -76,7 +76,7 @@ namespace TB_QuestGame
             MenuChoices = new Dictionary<char, CitizenAction>()
             {
                 { '1', CitizenAction.Talk },
-                { '2', CitizenAction.Trade },
+                //{ '2', CitizenAction.Trade },
                 { '0', CitizenAction.ReturnToMainMenu }
             }
         };
