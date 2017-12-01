@@ -15,10 +15,9 @@ namespace TB_QuestGame
         MissionSetup,
 
         //main menu
+        CitizenInfo,
         LookAround,
         Travel,
-        CitizenInfo,
-        CitizenInventory,
 
         //inventory menu
         Inventory,

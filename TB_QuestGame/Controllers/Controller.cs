@@ -139,6 +139,14 @@ namespace TB_QuestGame
                         PickUpObject();
                         break;
 
+                    case CitizenAction.Talk:
+
+                        break;
+
+                    case CitizenAction.Trade:
+
+                        break;
+
                     case CitizenAction.Inventory:
                         _gameConsoleView.DisplayInventory();
                         _currentMenu = ActionMenu.InventoryMenu;
