@@ -17,7 +17,6 @@ namespace TB_QuestGame
                 LocationId = 2,
                 Description = "A small pouch filled with some coins.",
                 Value = 45,
-                CanInventory = true,
                 IsVisible = true
             },
 
@@ -28,7 +27,6 @@ namespace TB_QuestGame
                 LocationId = 3,
                 Description = "A bright red jewel, roughly the size of a robin's egg... \n Why is this on a space station?",
                 Value = 100,
-                CanInventory = true,
                 IsVisible = true
             },
 

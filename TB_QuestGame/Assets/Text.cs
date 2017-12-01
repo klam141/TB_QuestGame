@@ -380,8 +380,9 @@ namespace TB_QuestGame
             return messageBoxText += mapObjectList;
         }
 
-        public static string LookAt(GameObject gameObject)
+        public static string LookAt(dynamic gameObject)
         {
+
             string messageBoxText = 
                 $"{gameObject.Name} \n \n" +
                 $"{gameObject.Description} \n \n";
@@ -390,18 +391,21 @@ namespace TB_QuestGame
             {
                 CitizenObject citizenObject = gameObject as CitizenObject;
 
-                messageBoxText += $"The {citizenObject.Name} ";
+                //Dont display caninventory if already in inventory
+                if(citizenObject.LocationId != 0)
+                {
+                    messageBoxText += $"The {citizenObject.Name} ";
 
-                if (citizenObject.CanInventory) messageBoxText += "can be added to your inventory.";
-                else messageBoxText += "can not be added to your inventory.";
+                    if (citizenObject.CanInventory) messageBoxText += "can be added to your inventory.";
+                    else messageBoxText += "can not be added to your inventory.";
+                }
             }
             else if(gameObject is TreasureObject)
             {
                 TreasureObject treasureObject = gameObject as TreasureObject;
 
                 messageBoxText += $"The {treasureObject.Name} has a value of {treasureObject.Value}";
-            }
-            else messageBoxText += $"The {gameObject.Name} can not be added to your inventory.";            
+            }     
 
             return messageBoxText;
         }

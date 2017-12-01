@@ -131,76 +131,27 @@ namespace TB_QuestGame
                         TriggerEvents();
                         break;
 
-                    case CitizenAction.LookAt://look at an item and act on it
-                        Dictionary<int, object> mapObjectsInLocation = _gameMap.GetMapObjectyByLocationId(_gameCitizen.LocationId);
-
-                        int mapObjectToLookAt = _gameConsoleView.DisplayGetMapObjectsToLookAt(mapObjectsInLocation);
-
-                        if(mapObjectToLookAt != 0)
-                        {
-                            _currentObject = mapObjectsInLocation[mapObjectToLookAt];
-
-                            if(_currentObject is GameObject)
-                            {
-                                _currentMenu = ActionMenu.ObjectMenu;
-                            }
-                            else if(_currentObject is Npc)
-                            {
-                                _currentObject = ActionMenu.NpcMenu;
-                            }
-                            else
-                            {
-                                string feedbackMessage = $"The object {_currentObject.name} is a {_currentObject.GetType()}";
-                                throw new ArgumentException(_currentObject.ToString(), feedbackMessage);
-                            }
-
-                            _gameConsoleView.DisplayObjectInfo(_currentObject);
-                        }
-
+                    case CitizenAction.Interact:
+                        Interact();
                         break;
 
                     case CitizenAction.PickUpItem:
-                        int objectToPickUpId = _gameConsoleView.DisplayGetCitizenObjectToPickUp();
-
-                        if(objectToPickUpId != 0)
-                        {
-                            GameObject gameobject = _gameMap.GetGameObjectById(objectToPickUpId);
-
-                            if(gameobject is CitizenObject)
-                            {
-                                _gameCitizen.Inventory.Add(gameobject as CitizenObject);
-                                gameobject.LocationId = 0;
-                            }
-                            else if(gameobject is TreasureObject)
-                            {
-                                _gameCitizen.Money += (gameobject as TreasureObject).Value;
-
-                                //remove from the game
-                                MapObjects.gameObjects.Remove(gameobject);
-                            }
-
-                            
-
-                            _gameConsoleView.DisplayConfirmPickUp(gameobject);
-                        }
-                        break;
-
-                    case CitizenAction.PutDownItem:
-                        int citizenObjectToPutDownId = _gameConsoleView.DisplayGetCitizenObjectToPutDown();
-
-                        if (citizenObjectToPutDownId != 0)
-                        {
-                            CitizenObject citizenObject = _gameMap.GetGameObjectById(citizenObjectToPutDownId) as CitizenObject;
-
-                            _gameCitizen.Inventory.Remove(citizenObject);
-                            citizenObject.LocationId = _gameCitizen.LocationId;
-
-                            _gameConsoleView.DisplayConfirmDrop(citizenObject);
-                        }
+                        PickUpObject();
                         break;
 
                     case CitizenAction.Inventory:
                         _gameConsoleView.DisplayInventory();
+                        _currentMenu = ActionMenu.InventoryMenu;
+                        break;
+
+                    case CitizenAction.LookAt:
+                        _currentObject = _gameMap.GetGameObjectById(_gameConsoleView.DisplayGetGameObjectsToLookAt(0));
+
+                        _gameConsoleView.DisplayObjectInfo(_currentObject);
+                        break;
+
+                    case CitizenAction.PutDownItem:
+                        PutDownObject();
                         break;
 
                     case CitizenAction.Travel:
@@ -224,7 +175,7 @@ namespace TB_QuestGame
                         break;
 
                     case CitizenAction.ReturnToMainMenu:
-                        _currentMenu = ActionMenu.MainMenu;
+                        ResetMenu();
                         _gameConsoleView.DisplayLocationInfo();
                         break;
 
@@ -357,6 +308,94 @@ namespace TB_QuestGame
 
                 _gameConsoleView.DisplayEventText();
             }
+        }
+
+        private void ResetMenu()
+        {
+            _currentObject = null;
+            _currentMenu = ActionMenu.MainMenu;
+        }
+
+        //look at a thing and get a menu to interact with it
+        private void Interact()
+        {
+            Dictionary<int, object> mapObjectsInLocation = _gameMap.GetMapObjectyByLocationId(_gameCitizen.LocationId);
+
+            int mapObjectToLookAt = _gameConsoleView.DisplayGetMapObjectsToLookAt(mapObjectsInLocation);
+
+            if (mapObjectToLookAt != 0)
+            {
+                _currentObject = mapObjectsInLocation[mapObjectToLookAt];
+
+                if (_currentObject is GameObject)
+                {
+                    _currentMenu = ActionMenu.ObjectMenu;
+                }
+                else if (_currentObject is Npc)
+                {
+                    _currentMenu = ActionMenu.NpcMenu;
+                }
+                else
+                {
+                    string feedbackMessage = $"The object {_currentObject.name} is a {_currentObject.GetType()}";
+                    throw new ArgumentException(_currentObject.ToString(), feedbackMessage);
+                }
+
+                _gameConsoleView.DisplayObjectInfo(_currentObject);
+            }
+        }
+
+        private void PickUpObject()
+        {
+            bool canPickUp = true;
+
+            if (_currentObject.Id != 0)
+            {
+                GameObject gameobject = _currentObject;
+
+                if (gameobject is CitizenObject)
+                {
+                    if ((gameobject as CitizenObject).CanInventory)
+                    {
+                        _gameCitizen.Inventory.Add(gameobject as CitizenObject);
+                        gameobject.LocationId = 0;
+                    }
+                    else
+                    {
+                        canPickUp = false;
+                    }
+                }
+                else if (gameobject is TreasureObject)
+                {
+                    _gameCitizen.Money += (gameobject as TreasureObject).Value;
+
+                    //remove from the game
+                    MapObjects.gameObjects.Remove(gameobject);
+                }
+
+                _gameConsoleView.DisplayConfirmPickUp(gameobject, canPickUp);
+
+                ResetMenu();
+            }
+        }
+
+        private void PutDownObject()
+        {
+            int citizenObjectToPutDownId = _gameConsoleView.DisplayGetCitizenObjectToPutDown();
+
+            if (citizenObjectToPutDownId != 0)
+            {
+                CitizenObject citizenObject = _gameMap.GetGameObjectById(citizenObjectToPutDownId) as CitizenObject;
+
+                _gameCitizen.Inventory.Remove(citizenObject);
+                citizenObject.LocationId = _gameCitizen.LocationId;
+
+                _gameConsoleView.DisplayConfirmDrop(citizenObject);
+            }
+
+            _currentMenu = ActionMenu.MainMenu;
+
+            ResetMenu();
         }
         #endregion
     }

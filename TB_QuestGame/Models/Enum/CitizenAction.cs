@@ -16,15 +16,20 @@ namespace TB_QuestGame
 
         //main menu
         LookAround,
-        LookAt,
-        Inventory,
         Travel,
         CitizenInfo,
         CitizenInventory,
 
+        //inventory menu
+        Inventory,
+        LookAt,
+        PutDownItem,
+
+        //interacting with objects/npcs
+        Interact,
+
         //object menu
         PickUpItem,
-        PutDownItem,
 
         //npc menu
         Talk,

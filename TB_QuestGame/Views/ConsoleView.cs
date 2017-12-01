@@ -631,22 +631,22 @@ namespace TB_QuestGame
             return mapObjectId;
         }
 
-        public int DisplayGetGameObjectsToLookAt()
+        public int DisplayGetGameObjectsToLookAt(int LocationId)
         {
             int gameObjectId = 0;
 
 
-            List<GameObject> gameObjectsInLocation = _gameMap.GetGameObjectsByLocationId(_gameCitizen.LocationId);
+            List<GameObject> gameObjectsInLocation = _gameMap.GetGameObjectsByLocationId(LocationId);
 
             if(gameObjectsInLocation.Count > 0)
             {
                 DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false, false), ActionMenu.MainMenu, "");
 
-                while(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationId)))
+                while(!(_gameMap.IsValidObjectByLocationId(gameObjectId, LocationId)))
                 {
                     GetInteger($"Enter the Id number of the object you want to look at: ", 0, 0, out gameObjectId);
 
-                    if(!(_gameMap.IsValidObjectByLocationId(gameObjectId, _gameCitizen.LocationId)))
+                    if(!(_gameMap.IsValidObjectByLocationId(gameObjectId, LocationId)))
                     {
                         ClearInputBox();
                         DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
@@ -662,7 +662,7 @@ namespace TB_QuestGame
             return gameObjectId;
         }
 
-        public void DisplayGameObjectInfo(GameObject gameObject)
+        public void DisplayObjectInfo(dynamic gameObject)
         {
             DisplayGamePlayScreen(Text.LookAt(gameObject), ActionMenu.MainMenu, "");
         }
@@ -754,9 +754,16 @@ namespace TB_QuestGame
             return citizenObjectId;
         }
 
-        public void DisplayConfirmPickUp(GameObject o)
+        public void DisplayConfirmPickUp(GameObject o, bool canPickUp)
         {
-            DisplayGamePlayScreen($"The {o.Name} has been added to your inventory", ActionMenu.MainMenu, "");
+            if(canPickUp)
+            {
+                DisplayGamePlayScreen($"The {o.Name} has been added to your inventory", ActionMenu.MainMenu, "");
+            }
+            else
+            {
+                DisplayGamePlayScreen($"The {o.Name} cannot be added to your inventory", ActionMenu.MainMenu, "");
+            }
         }
 
         public void DisplayConfirmDrop(GameObject o)

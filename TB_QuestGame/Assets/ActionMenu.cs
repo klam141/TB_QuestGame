@@ -49,12 +49,11 @@ namespace TB_QuestGame
             MenuChoices = new Dictionary<char, CitizenAction>()
             {
                 { '1', CitizenAction.CitizenInfo },
-                { '2', CitizenAction.LookAround},
-                { '3', CitizenAction.LookAt},
-                { '6', CitizenAction.Inventory},
-                { '5', CitizenAction.PutDownItem},
-                { '7', CitizenAction.Travel},
-                { '8', CitizenAction.AdminMenu},
+                { '2', CitizenAction.LookAround },
+                { '3', CitizenAction.Interact },
+                { '6', CitizenAction.Inventory },
+                { '7', CitizenAction.Travel },
+                { '8', CitizenAction.AdminMenu },
                 { '0', CitizenAction.Exit }
             }
         };
@@ -65,8 +64,8 @@ namespace TB_QuestGame
             MenuTitle = "Object Menu",
             MenuChoices = new Dictionary<char, CitizenAction>()
             {
-                { '1', CitizenAction.PickUpItem},
-                { '0', CitizenAction.ReturnToMainMenu}
+                { '1', CitizenAction.PickUpItem },
+                { '0', CitizenAction.ReturnToMainMenu }
             }
         };
 
@@ -76,9 +75,21 @@ namespace TB_QuestGame
             MenuTitle = "NPC Menu",
             MenuChoices = new Dictionary<char, CitizenAction>()
             {
-                { '1', CitizenAction.Talk},
-                { '2', CitizenAction.Trade},
-                { '0', CitizenAction.ReturnToMainMenu}
+                { '1', CitizenAction.Talk },
+                { '2', CitizenAction.Trade },
+                { '0', CitizenAction.ReturnToMainMenu }
+            }
+        };
+
+        public static Menu InventoryMenu = new Menu()
+        {
+            MenuName = "InventoryMenu",
+            MenuTitle = "Inventory Menu",
+            MenuChoices = new Dictionary<char, CitizenAction>()
+            {
+                { '1', CitizenAction.LookAt },
+                { '2', CitizenAction.PutDownItem },
+                { '0', CitizenAction.ReturnToMainMenu }
             }
         };
 
@@ -89,7 +100,7 @@ namespace TB_QuestGame
             MenuChoices = new Dictionary<char, CitizenAction>()
             {
                 { '1', CitizenAction.ListDestinations },
-                { '2', CitizenAction.ListItems},
+                { '2', CitizenAction.ListItems },
                 { '3', CitizenAction.ListNpcs },
                 { '0', CitizenAction.ReturnToMainMenu}
             }
@@ -101,7 +112,7 @@ namespace TB_QuestGame
             MenuTitle = "",
             MenuChoices = new Dictionary<char, CitizenAction>()
             {
-                { ' ', CitizenAction.None}
+                { ' ', CitizenAction.None }
             }
         };
 
