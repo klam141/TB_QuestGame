@@ -738,7 +738,7 @@ namespace TB_QuestGame
                     }
 
                     //display error messages
-                    if (inventoryContainsItem)
+                    if (!inventoryContainsItem)
                     {
                         ClearInputBox();
                         DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
@@ -794,10 +794,45 @@ namespace TB_QuestGame
 
         }
 
+        public int DisplayGetTrade(Dictionary<int, KeyValuePair<int, GameObject>> tradeInventory)
+        {
+            int tradeItemId = 0;
+            bool validTradeItem = false;            
+            
+                DisplayGamePlayScreen(Text.TradeMenu(tradeInventory), ActionMenu.NpcMenu, "");
+
+                while (!validTradeItem)
+                {
+                    GetInteger("Enter the ID of the item you want to buy, or press 0 to cancel: ", 0, 0, out tradeItemId);
+
+                    foreach(KeyValuePair<int, KeyValuePair<int, GameObject>> tradeItem in tradeInventory)
+                    {
+                        if (tradeItemId == tradeItem.Key) validTradeItem = true;
+                    }
+
+                    //allow 0 to exit
+                    if (tradeItemId == 0) validTradeItem = true;
+
+                    if (!validTradeItem)
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("You have entered an invalid ID. Please try again.");
+                    }
+                }
+
+            return tradeItemId;
+        }
+
 
 
         public void DisplayExit() {
             DisplayGamePlayScreen("Thanks for playing!", ActionMenu.ExitMenu, "");
+            GetContinueKey();
+        }
+
+        public void DisplayGameWon()
+        {
+            DisplayGamePlayScreen(Text.GameWon(), ActionMenu.None, "");
             GetContinueKey();
         }
 

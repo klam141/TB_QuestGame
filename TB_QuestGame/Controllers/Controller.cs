@@ -106,11 +106,7 @@ namespace TB_QuestGame
             // game loop
             //
             while (_playingGame)
-            {
-                //Process all flags, events, stats
-                UpdateGameStatus();
-
-                
+            {                
                 CitizenActionChoice = _gameConsoleView.GetActionMenuChoice(_currentMenu);
                 
 
@@ -144,7 +140,7 @@ namespace TB_QuestGame
                         break;
 
                     case CitizenAction.Trade:
-
+                        Trade();
                         break;
 
                     case CitizenAction.Inventory:
@@ -195,6 +191,9 @@ namespace TB_QuestGame
                     default:
                         break;
                 }
+
+                //Process all flags, events, stats
+                UpdateGameStatus();
             }
 
             //
@@ -226,6 +225,8 @@ namespace TB_QuestGame
 
         private void UpdateGameStatus()
         {
+            CheckGameWon();
+
             if (!_gameCitizen.HasVisited(_currentLocation.LocationID))
             {
                 //add location to list of visited locations
@@ -359,6 +360,76 @@ namespace TB_QuestGame
 
             _gameConsoleView.DisplayTalkTo(npc);
         }
+
+        private void Trade()
+        {
+            Npc npc = _currentObject;
+
+            int tradeItemId = 0; 
+
+            if (npc is Trader)
+            {
+                Trader trader = npc as Trader;
+
+                Dictionary<int, KeyValuePair<int, GameObject>> tradeInventory = new Dictionary<int, KeyValuePair<int, GameObject>>();
+
+                //make a dictionary of gameobjects where key is the selection and value is price and object
+                int i = 0;
+                foreach (KeyValuePair<int, int> tradeObject in trader.Inventory)
+                {
+                    i++;
+                    tradeInventory.Add(i, new KeyValuePair<int, GameObject>(tradeObject.Key, _gameMap.GetGameObjectById(tradeObject.Value)));
+                }
+
+                if (tradeInventory.Count > 0)
+                {
+                    tradeItemId = _gameConsoleView.DisplayGetTrade(tradeInventory);
+
+                    if (tradeItemId > 0)
+                    {
+                        KeyValuePair<int, GameObject> itemToBuy = tradeInventory[tradeItemId];
+
+                        //check if player has enough money
+                        if (_gameCitizen.Money > itemToBuy.Key)
+                        {
+                            GameObject gameObject = itemToBuy.Value;
+                            _gameCitizen.Money -= itemToBuy.Key;
+                            trader.Inventory.Remove(itemToBuy.Key);
+
+                            //picks up object automatically if it can be picked up, else puts it in that room
+                            if (gameObject is CitizenObject)
+                            {
+                                _gameCitizen.Inventory.Add(gameObject as CitizenObject);
+                                gameObject.LocationId = 0;
+                            }
+                            else
+                            {
+                                gameObject.LocationId = _gameCitizen.LocationId;
+                            }
+
+                            _gameConsoleView.DisplayGamePlayScreen($"You bought the {gameObject.Name}.", ActionMenu.NpcMenu, "");
+
+                        }
+                        else
+                        {
+                            _gameConsoleView.DisplayGamePlayScreen("You don't have enough money for that.", ActionMenu.NpcMenu, "");
+                        }
+                    }
+                    else
+                    {
+                        _gameConsoleView.DisplayObjectInfo(_currentObject);
+                    }
+                }
+                else
+                {
+                    _gameConsoleView.DisplayGamePlayScreen("Merchant: \nI'm all out of stock", ActionMenu.NpcMenu, "");
+                }
+            }
+            else
+            {
+                _gameConsoleView.DisplayGamePlayScreen("They don't have anything to trade.", ActionMenu.NpcMenu, "");
+            }
+        }
             
 
         private void PickUpObject()
@@ -413,6 +484,19 @@ namespace TB_QuestGame
 
             ResetMenu();
         }
+
+        private void CheckGameWon()
+        {
+            //check if you're in your room with the pillow
+            if(_gameCitizen.LocationId == 1 && _gameCitizen.Inventory.Contains(_gameMap.GetGameObjectById(10)))
+            {
+                _playingGame = false;
+                _currentMenu = ActionMenu.None;
+
+                _gameConsoleView.DisplayGameWon();
+            }
+        }
         #endregion
     }
+
 }

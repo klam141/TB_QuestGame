@@ -20,4 +20,9 @@ namespace TB_QuestGame
         int CurrentMessageNum { get; set; }
         string Speak();
     }
+
+    interface ITrade
+    {
+        Dictionary<int, int> Inventory { get; set; }//key is the price, value is the object
+    }
 }

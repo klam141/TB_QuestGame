@@ -100,7 +100,8 @@ namespace TB_QuestGame
                 "You remember now. \n" +
                 $"Your name is {gameCitizen.Name}. \n" +
                 $"You are {gameCitizen.Age} years old. \n" +
-                $"You are from {gameCitizen.HomePlanet}.";
+                $"You are from {gameCitizen.HomePlanet}. \n \n" +
+                "Your bed is really uncomfortable. You'll need a new pillow to go back to sleep.";
 
             return messageBoxText;
         }
@@ -424,6 +425,40 @@ namespace TB_QuestGame
             string messageBoxText = "Inventory \n \n";
 
             messageBoxText += GameObjectTable(inventory, true, false);
+
+            return messageBoxText;
+        }
+
+        public static string TradeMenu(Dictionary<int, KeyValuePair<int, GameObject>> tradeInventory)
+        {
+            string messageBoxText = "Items for sale: \n \n";
+
+            messageBoxText +=
+                "ID".PadRight(10) + "Item".PadRight(30) + "Price".PadRight(10) + " \n" +
+                "---".PadRight(10) + "----------------------".PadRight(30) + "---".PadRight(10) + " \n";
+
+            string tradeList = "";
+
+            foreach(KeyValuePair<int, KeyValuePair<int, GameObject>> tradeItem in tradeInventory) {
+                tradeList +=
+                    tradeItem.Key.ToString().PadRight(10) +
+                    tradeItem.Value.Value.Name.PadRight(30) +
+                    tradeItem.Value.Key.ToString().PadRight(10) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += tradeList;
+
+            return messageBoxText;
+        }
+
+        public static string GameWon()
+        {
+            string messageBoxText = 
+                "With your new pillow you can finally go back to sleep. \n" +
+                "You lay down in your bed and doze off. \n \n" +
+                "YOU WIN \n" +
+                "Thanks For Playing!";
 
             return messageBoxText;
         }

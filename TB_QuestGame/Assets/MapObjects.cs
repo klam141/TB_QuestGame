@@ -78,26 +78,20 @@ namespace TB_QuestGame
                 CanInventory = true,
                 IsConsumable = true,
                 IsVisible = true
-            }
-            /*
-            new LocationObject
-            {
-                Id = 5,
-                Name = "Boldendorian Chest",
-                LocationId = 2,
-                Description = "A large wooden chest adorned with jewels.",
-                IsDeadly = true
             },
 
-            new LocationObject
+            new CitizenObject
             {
-                Id = 6,
-                Name = "Silver Mirror",
-                LocationId = 2,
-                Description = "A small silver mirror hanging on the wall next to a small window.",
-                IsDeadly = true
+                Id = 10,
+                Name = "Pillow",
+                LocationId = -1,
+                Description = 
+                    "You can go back to sleep with this.",
+                Type = ObjectType.Tool,
+                CanInventory = true,
+                IsConsumable = false,
+                IsVisible = true
             }
-            */
         };
     }
 }

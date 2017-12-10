@@ -16,7 +16,7 @@ namespace TB_QuestGame
                 CommonName = "Your Room",
                 LocationID = 1,
                 Description = "Your room. You live here.",
-                GeneralContents = "- stuff in the room -",
+                GeneralContents = "In one corner of the room is your bed. On the other side of the room is your desk.",
                 CanAccess = new int[] { 2 },
                 Accessable = true,
                 ExperiencePoints = 10
@@ -64,6 +64,17 @@ namespace TB_QuestGame
                 LocationID = 5,
                 Description = "You can eat here",
                 GeneralContents ="The food court is much smaller than the ones in the larger plazas, but it still has a large vareity of restaurants." ,
+                CanAccess = new int[] { 3 },
+                Accessable = true,
+                ExperiencePoints = 20
+            },
+
+            new Location
+            {
+                CommonName = "Bathroom",
+                LocationID = 6,
+                Description = "Your bathroom. You know what happens here.",
+                GeneralContents ="You take a look at your face in the mirror. You don't see anything new." ,
                 CanAccess = new int[] { 3 },
                 Accessable = true,
                 ExperiencePoints = 20

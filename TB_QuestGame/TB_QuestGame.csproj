@@ -65,6 +65,7 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Citizen.cs" />
     <Compile Include="Models\Npc.cs" />
+    <Compile Include="Models\Trader.cs" />
     <Compile Include="Models\TreasureObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
