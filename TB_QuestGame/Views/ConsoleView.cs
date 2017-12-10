@@ -609,7 +609,7 @@ namespace TB_QuestGame
 
             if(mapObjectsInLocation.Count > 0)
             {
-                DisplayGamePlayScreen(Text.ListMapObjects(mapObjectsInLocation), ActionMenu.InventoryMenu, "");
+                DisplayGamePlayScreen(Text.ListMapObjects(mapObjectsInLocation), ActionMenu.MainMenu, "");
 
                 while(!mapObjectsInLocation.ContainsKey(mapObjectId))
                 {
