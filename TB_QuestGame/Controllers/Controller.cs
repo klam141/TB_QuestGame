@@ -106,8 +106,19 @@ namespace TB_QuestGame
             // game loop
             //
             while (_playingGame)
-            {                
-                CitizenActionChoice = _gameConsoleView.GetActionMenuChoice(_currentMenu);
+            {
+                //Process all flags, events, stats
+                UpdateGameStatus();
+
+
+                if(CheckGameWon())
+                {
+                    CitizenActionChoice = CitizenAction.None;
+                }
+                else
+                {
+                    CitizenActionChoice = _gameConsoleView.GetActionMenuChoice(_currentMenu);
+                }
                 
 
                 //
@@ -191,9 +202,6 @@ namespace TB_QuestGame
                     default:
                         break;
                 }
-
-                //Process all flags, events, stats
-                UpdateGameStatus();
             }
 
             //
@@ -225,8 +233,6 @@ namespace TB_QuestGame
 
         private void UpdateGameStatus()
         {
-            CheckGameWon();
-
             if (!_gameCitizen.HasVisited(_currentLocation.LocationID))
             {
                 //add location to list of visited locations
@@ -485,16 +491,19 @@ namespace TB_QuestGame
             ResetMenu();
         }
 
-        private void CheckGameWon()
+        private bool CheckGameWon()
         {
             //check if you're in your room with the pillow
-            if(_gameCitizen.LocationId == 1 && _gameCitizen.Inventory.Contains(_gameMap.GetGameObjectById(10)))
+            if (_gameCitizen.LocationId == 1 && _gameCitizen.Inventory.Contains(_gameMap.GetGameObjectById(10)))
             {
                 _playingGame = false;
                 _currentMenu = ActionMenu.None;
 
                 _gameConsoleView.DisplayGameWon();
+
+                return true;
             }
+            else return false;
         }
         #endregion
     }

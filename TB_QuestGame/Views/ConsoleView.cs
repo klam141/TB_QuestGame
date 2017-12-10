@@ -609,7 +609,7 @@ namespace TB_QuestGame
 
             if(mapObjectsInLocation.Count > 0)
             {
-                DisplayGamePlayScreen(Text.ListMapObjects(mapObjectsInLocation), ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen(Text.ListMapObjects(mapObjectsInLocation), ActionMenu.InventoryMenu, "");
 
                 while(!mapObjectsInLocation.ContainsKey(mapObjectId))
                 {
@@ -625,7 +625,7 @@ namespace TB_QuestGame
             else
             {
                 ClearInputBox();
-                DisplayGamePlayScreen("There is nothing to look at here.", ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("There is nothing to look at", ActionMenu.MainMenu, "");
             }
 
             return mapObjectId;
@@ -640,7 +640,7 @@ namespace TB_QuestGame
 
             if(gameObjectsInLocation.Count > 0)
             {
-                DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false, false), ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen(Text.ListGameObjects(gameObjectsInLocation, false, false), ActionMenu.InventoryMenu, "");
 
                 while(!(_gameMap.IsValidObjectByLocationId(gameObjectId, LocationId)))
                 {
@@ -656,7 +656,7 @@ namespace TB_QuestGame
             else
             {
                 ClearInputBox();
-                DisplayGamePlayScreen("There is nothing to look at here.", ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("There is nothing to look at here.", ActionMenu.InventoryMenu, "");
             }
 
             return gameObjectId;
@@ -773,7 +773,7 @@ namespace TB_QuestGame
 
         public void DisplayInventory()
         {
-            DisplayGamePlayScreen(Text.CurrentInventory(_gameCitizen.Inventory), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen(Text.CurrentInventory(_gameCitizen.Inventory), ActionMenu.InventoryMenu, "");
         }
 
         public void DisplayListOfNpcs(IEnumerable<Npc> npcs)
